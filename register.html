@@ -543,7 +543,7 @@ async function submitRegister(){
 
     await $.ajax({
         type:"POST",
-        url:"https://ultra-render-33da.onrender.com/auth/register",
+        url:"https://ultrade-render.onrender.com/auth/register",
         dataType:"json",
        data:{
    firstName: localStorage.getItem("firstName"),
@@ -646,7 +646,7 @@ async function submitSurvey(){
   try {
     await $.ajax({
       type: 'PUT',
-      url: `https://ultra-render-33da.onrender.com/auth/register/survey/${userId}`,
+      url: `https://ultrade-render.onrender.com/auth/register/survey/${userId}`,
       dataType: 'json',
       data: {
         // Contact
