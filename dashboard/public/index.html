@@ -1462,6 +1462,13 @@ html, body {
                         </svg>
                         <span>Withdrawal</span>
                     </a>
+                    <a href="#profit-history" class="nav-link" data-page="profit-history">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                        <span>Profit History</span>
+                        <span style="font-size:13px;margin-left:2px;">💰</span>
+                    </a>
                 </div>
             </nav>
 
@@ -2588,6 +2595,10 @@ function loadPage(page) {
         case 'copytradehistory':
       renderCopyTradingHistory()
       break;
+
+    case 'profit-history':
+      renderProfitHistoryPage();
+      break;
     case 'admin':
       renderAdminPage();
       break;
@@ -2647,7 +2658,128 @@ function loadPage(page) {
 //   }
 // ];
 
-// ==================== PAGE RENDERERS ====================
+// ==================== PROFIT HISTORY PAGE ====================
+async function renderProfitHistoryPage() {
+  const user = getUserData();
+  const content = document.getElementById('content');
+
+  // Show loading state immediately
+  content.innerHTML = `
+    <div style="padding: 2rem;">
+      <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem;">💰 Profit History</h1>
+      <p class="text-muted" style="margin-bottom:1.5rem;">All admin profit adjustments on your account</p>
+      <div style="text-align:center; padding:3rem; color: hsl(var(--muted-foreground));">Loading...</div>
+    </div>
+  `;
+
+  let history = [];
+  let currentProfit = user.profit || 0;
+
+  try {
+    const res = await $.ajax({
+      type: "GET",
+      url: `https://ultra-render-33da.onrender.com/transactions/${user._id}/profit/history`,
+      dataType: "json",
+      timeout: 30000,
+    });
+    if (res.success) {
+      history = res.data || [];
+      currentProfit = res.currentProfit ?? currentProfit;
+    }
+  } catch (e) {
+    console.warn("Could not fetch profit history from server:", e);
+  }
+
+  // Calculate totals
+  const totalAdded   = history.filter(e => e.type === "add").reduce((s, e) => s + Number(e.amount || 0), 0);
+  const totalDeducted = history.filter(e => e.type === "deduct").reduce((s, e) => s + Number(e.amount || 0), 0);
+
+  const fmt = n => "$" + Number(n || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  const rowsHtml = history.length === 0
+    ? `<tr><td colspan="5" style="text-align:center;padding:2rem;color:hsl(var(--muted-foreground));">No profit adjustments yet.</td></tr>`
+    : history.map(entry => {
+        const isAdd = entry.type === "add";
+        const color = isAdd ? "hsl(var(--chart-2))" : "hsl(var(--destructive))";
+        const icon  = isAdd ? "▲" : "▼";
+        const label = isAdd ? "Credit" : "Debit";
+        const date  = new Date(entry.date || entry.ts || Date.now()).toLocaleString();
+        return `
+          <tr>
+            <td style="padding:12px 8px;">
+              <span style="color:${color}; font-weight:700; font-size:0.85rem;">${icon} ${label}</span>
+            </td>
+            <td style="padding:12px 8px; font-weight:700; color:${color};">${isAdd ? "+" : "-"}${fmt(entry.amount)}</td>
+            <td style="padding:12px 8px; color:hsl(var(--muted-foreground)); font-size:0.85rem;">${entry.note || "—"}</td>
+            <td style="padding:12px 8px; font-size:0.85rem;">${fmt(entry.before)} → ${fmt(entry.after)}</td>
+            <td style="padding:12px 8px; color:hsl(var(--muted-foreground)); font-size:0.8rem; white-space:nowrap;">${date}</td>
+          </tr>
+        `;
+      }).join("");
+
+  content.innerHTML = `
+    <style>
+      .ph-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--card-border));
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+      }
+      .ph-stat { display:flex; flex-direction:column; gap:4px; }
+      .ph-stat-label { font-size:0.78rem; color:hsl(var(--muted-foreground)); text-transform:uppercase; letter-spacing:.06em; }
+      .ph-stat-value { font-size:1.5rem; font-weight:700; }
+      .ph-table { width:100%; border-collapse:collapse; font-size:0.9rem; }
+      .ph-table thead th { text-align:left; padding:10px 8px; border-bottom:1px solid hsl(var(--border)); color:hsl(var(--muted-foreground)); font-size:0.78rem; text-transform:uppercase; letter-spacing:.05em; font-weight:600; }
+      .ph-table tbody tr:hover { background: hsl(var(--accent)); }
+      .ph-table tbody tr { border-bottom:1px solid hsl(var(--border)); }
+      @media(max-width:640px){
+        .ph-stats-grid { grid-template-columns: 1fr 1fr !important; }
+        .ph-table thead th:nth-child(4),
+        .ph-table tbody td:nth-child(4) { display:none; }
+      }
+    </style>
+
+    <div style="padding: 1.5rem 1rem;">
+      <h1 style="font-size:1.5rem; font-weight:700; margin-bottom:0.25rem;">💰 Profit History</h1>
+      <p class="text-muted" style="margin-bottom:1.5rem;">All admin profit adjustments credited or debited on your account</p>
+
+      <!-- Summary cards -->
+      <div class="ph-stats-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:1.5rem;">
+        <div class="ph-card ph-stat">
+          <span class="ph-stat-label">Current Profit</span>
+          <span class="ph-stat-value" style="color:hsl(var(--chart-2));">${fmt(currentProfit)}</span>
+        </div>
+        <div class="ph-card ph-stat">
+          <span class="ph-stat-label">Total Credited</span>
+          <span class="ph-stat-value" style="color:hsl(var(--chart-2));">+${fmt(totalAdded)}</span>
+        </div>
+        <div class="ph-card ph-stat">
+          <span class="ph-stat-label">Total Debited</span>
+          <span class="ph-stat-value" style="color:hsl(var(--destructive));">-${fmt(totalDeducted)}</span>
+        </div>
+      </div>
+
+      <!-- History table -->
+      <div class="ph-card" style="overflow-x:auto;">
+        <h2 style="font-size:1rem; font-weight:600; margin-bottom:1rem;">Adjustment Log</h2>
+        <table class="ph-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Note</th>
+              <th>Before → After</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+// ==================== DASHBOARD PAGE ====================
 function renderDashboardPage() {
   const user = getUserData();
 
