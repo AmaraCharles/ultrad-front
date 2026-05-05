@@ -234,6 +234,48 @@
     .nav-search input::placeholder { color: var(--text-dim); }
     .nav-search svg { color: var(--text-dim); flex-shrink: 0; }
 
+    /* ── GTranslate – blog desktop nav ── */
+    .gt-blog-wrap { display: flex; align-items: center; }
+    .gt-blog-wrap .gt_switcher_wrapper,
+    .gt-blog-wrap .gt_switcher {
+      background: transparent !important;
+      border: 1.5px solid var(--border-strong) !important;
+      border-radius: 8px !important;
+      box-shadow: none !important;
+    }
+    .gt-blog-wrap .gt_switcher a,
+    .gt-blog-wrap .gt_switcher span {
+      color: var(--text-dim) !important;
+      font-family: 'Poppins', sans-serif !important;
+      font-size: 0.8rem !important;
+      font-weight: 500 !important;
+      padding: 6px 10px !important;
+    }
+    .gt-blog-wrap .gt_switcher a:hover { color: var(--accent) !important; background: var(--accent-light) !important; }
+
+    /* ── GTranslate – blog mobile drawer ── */
+    .gt-blog-mobile-wrap {
+      margin-top: 8px;
+      width: 100%;
+    }
+    .gt-blog-mobile-wrap .gt_switcher_wrapper,
+    .gt-blog-mobile-wrap .gt_switcher {
+      width: 100% !important;
+      background: var(--bg2) !important;
+      border: 1.5px solid var(--border-strong) !important;
+      border-radius: 10px !important;
+      box-shadow: none !important;
+    }
+    .gt-blog-mobile-wrap .gt_switcher a,
+    .gt-blog-mobile-wrap .gt_switcher span {
+      color: var(--text-body) !important;
+      font-family: 'Poppins', sans-serif !important;
+      font-size: 0.9rem !important;
+      font-weight: 500 !important;
+      padding: 12px 16px !important;
+    }
+    .gt-blog-mobile-wrap .gt_switcher a:hover { background: var(--accent-light) !important; color: var(--accent) !important; }
+
     /* Mobile hamburger */
     .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; z-index: 400; background: none; border: none; }
     .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
@@ -733,7 +775,7 @@
     }
     @media (max-width: 768px) {
       .header { padding: 0 24px; }
-      .nav-links, .nav-search { display: none !important; }
+      .nav-links, .nav-search, .gt-blog-wrap { display: none !important; }
       .hamburger { display: flex; }
       .blog-hero { padding: 52px 24px 44px; }
       .blog-hero-top { grid-template-columns: 1fr; }
@@ -763,6 +805,8 @@
       .nl-perks { flex-direction: column; align-items: center; gap: 12px; }
     }
   </style>
+  <script>window.gtranslateSettings = {"default_language":"en","languages":["en","fr","it","es","de","id","pt","sr","mt"],"wrapper_selector":".gtranslate_wrapper"}</script>
+  <script src="https://cdn.gtranslate.net/widgets/latest/dwf.js" defer></script>
 </head>
 <body>
 
@@ -788,6 +832,9 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
       <input type="text" placeholder="Search articles…" oninput="handleSearch(this.value)">
     </div>
+    <div class="gt-blog-wrap">
+      <div class="gtranslate_wrapper"></div>
+    </div>
     <button type="button" class="hamburger" id="hamburger" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
   </header>
 
@@ -803,6 +850,9 @@
     <div class="mobile-nav-search">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
       <input type="text" placeholder="Search articles…" oninput="handleSearch(this.value)">
+    </div>
+    <div class="gt-blog-mobile-wrap">
+      <div class="gtranslate_wrapper"></div>
     </div>
   </div>
 
@@ -2151,7 +2201,7 @@ window.smartsupp||(function(d) {
 <noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
 
 <!-- WhatsApp Floating Button -->
-<a href="https://wa.me/15843331519" class="whatsapp-widget" target="_blank">
+<a href="https://wa.me/16072029084" class="whatsapp-widget" target="_blank">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
         <path fill="white" d="M19.11 17.38c-.27-.13-1.59-.78-1.84-.87-.25-.09-.43-.13-.61.13-.18.27-.7.87-.86 1.05-.16.18-.31.2-.58.07-.27-.13-1.13-.42-2.15-1.33-.79-.7-1.33-1.57-1.48-1.83-.16-.27-.02-.41.11-.54.12-.12.27-.31.4-.47.13-.16.18-.27.27-.45.09-.18.04-.34-.02-.47-.07-.13-.61-1.48-.84-2.03-.22-.52-.44-.45-.61-.46h-.52c-.18 0-.47.07-.72.34-.25.27-.95.93-.95 2.27s.97 2.63 1.11 2.81c.13.18 1.91 2.92 4.63 4.1.65.28 1.16.45 1.56.58.66.21 1.26.18 1.74.11.53-.08 1.59-.65 1.82-1.28.22-.63.22-1.17.16-1.28-.07-.11-.25-.18-.52-.31z"/>
         <path fill="white" d="M16.02 3C8.84 3 3 8.72 3 15.72c0 2.77.9 5.34 2.44 7.43L4 29l6.05-1.58c1.98 1.08 4.23 1.65 6.52 1.65 7.18 0 13.02-5.72 13.02-12.72S23.2 3 16.02 3z"/>
