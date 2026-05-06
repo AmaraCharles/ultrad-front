@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Federal Public Assets Management — Federal Ministry of Housing & Urban Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a6b3c;
+    --green-dark: #0e3f22;
+    --green-light: #2a8f52;
+    --gold: #c9a227;
+    --gold-light: #e8c45a;
+    --cream: #f5f0e8;
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+    --text: #1a1a2e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(14, 63, 34, 0.97);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 68px;
+    border-bottom: 1px solid rgba(201, 162, 39, 0.3);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 14px; }
+  .nav-coat {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), #8b6914);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: white; font-weight: 900;
+    border: 2px solid rgba(201, 162, 39, 0.6);
+    box-shadow: 0 0 0 2px rgba(201,162,39,0.2);
+  }
+  .nav-title { color: var(--white); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.02em; line-height: 1.3; }
+  .nav-title span { display: block; color: var(--gold-light); font-size: 0.68rem; font-weight: 300; letter-spacing: 0.04em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.82rem; font-weight: 400; letter-spacing: 0.03em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(165deg, var(--green-dark) 0%, #143a24 45%, var(--green) 100%);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=60&auto=format&fit=crop');
+    background-size: cover; background-position: center;
+    opacity: 0.06;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,162,39,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201, 162, 39, 0.15);
+    border: 1px solid rgba(201, 162, 39, 0.4);
+    color: var(--gold-light);
+    padding: 6px 16px; border-radius: 100px;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge::before { content: '●'; font-size: 0.5rem; }
+  .hero-text { position: relative; z-index: 1; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.12;
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero h1 em { color: var(--gold-light); font-style: normal; }
+  .hero p {
+    color: rgba(255,255,255,0.72);
+    font-size: 1.05rem; font-weight: 300; line-height: 1.75;
+    max-width: 520px;
+    margin-bottom: 36px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), #a07810);
+    color: var(--white);
+    padding: 14px 28px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; font-weight: 600; letter-spacing: 0.02em;
+    border: none; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.25s; box-shadow: 0 4px 20px rgba(201,162,39,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,162,39,0.45); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--white);
+    padding: 14px 28px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; font-weight: 500; letter-spacing: 0.02em;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.25s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+  .hero-image-col {
+    display: flex; justify-content: flex-end; align-items: center;
+    position: relative; z-index: 1;
+    animation: fadeLeft 0.9s 0.2s ease both;
+  }
+  .hero-img-stack { position: relative; width: 420px; height: 500px; }
+  .hero-img-main {
+    position: absolute; top: 0; right: 0;
+    width: 360px; height: 420px;
+    border-radius: 16px;
+    object-fit: cover;
+    border: 3px solid rgba(201,162,39,0.4);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+  }
+  .hero-img-sec {
+    position: absolute; bottom: 0; left: 0;
+    width: 220px; height: 180px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,0.15);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  }
+  .hero-stat-badge {
+    position: absolute; top: 50px; left: 0;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: white;
+  }
+  .hero-stat-badge .num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold-light); }
+  .hero-stat-badge .label { font-size: 0.72rem; font-weight: 300; color: rgba(255,255,255,0.65); letter-spacing: 0.05em; }
+
+  /* ─── STATS STRIP ─── */
+  .stats-strip {
+    background: var(--white);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--gray-200);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+  }
+  .stat-item {
+    padding: 36px 32px;
+    border-right: 1px solid var(--gray-200);
+    transition: background 0.2s;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item:hover { background: var(--gray-50); }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 900;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-num span { color: var(--gold); }
+  .stat-label { font-size: 0.82rem; color: var(--gray-600); font-weight: 400; letter-spacing: 0.02em; }
+
+  /* ─── SECTION SHARED ─── */
+  section { padding: 90px 5%; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--green); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .section-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 18px;
+  }
+  .section-lead { color: var(--gray-600); font-size: 1.05rem; font-weight: 300; line-height: 1.75; max-width: 680px; }
+
+  /* ─── ABOUT ─── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .about-image-wrap { position: relative; }
+  .about-img {
+    width: 100%; height: 500px; object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+  }
+  .about-quote {
+    position: absolute;
+    bottom: -28px; right: -28px;
+    background: var(--green);
+    color: white;
+    padding: 28px 32px;
+    border-radius: 12px;
+    max-width: 280px;
+    box-shadow: 0 12px 40px rgba(26,107,60,0.4);
+  }
+  .about-quote p { font-size: 0.9rem; line-height: 1.6; font-weight: 300; margin-bottom: 12px; }
+  .about-quote strong { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold-light); display: block; }
+  .about-features { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .feature-card {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 20px;
+    transition: all 0.25s;
+  }
+  .feature-card:hover { border-color: var(--green-light); box-shadow: 0 4px 20px rgba(26,107,60,0.1); transform: translateY(-2px); }
+  .feature-icon { font-size: 1.5rem; margin-bottom: 10px; }
+  .feature-title { font-weight: 600; font-size: 0.88rem; color: var(--text); margin-bottom: 6px; }
+  .feature-desc { font-size: 0.8rem; color: var(--gray-600); line-height: 1.5; }
+
+  /* ─── MANDATE CARDS ─── */
+  .mandate-section { background: var(--green-dark); }
+  .mandate-section .section-title { color: var(--white); }
+  .mandate-section .section-tag { color: var(--gold-light); }
+  .mandate-section .section-tag::before { background: var(--gold-light); }
+  .mandate-section .section-lead { color: rgba(255,255,255,0.65); }
+  .mandates-grid {
+    margin-top: 50px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .mandate-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px; padding: 32px 28px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .mandate-card:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(201,162,39,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+  .mandate-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900; color: rgba(201,162,39,0.25);
+    line-height: 1; margin-bottom: 16px;
+  }
+  .mandate-title { font-weight: 600; font-size: 0.95rem; color: white; margin-bottom: 12px; }
+  .mandate-body { font-size: 0.85rem; color: rgba(255,255,255,0.58); line-height: 1.6; }
+
+  /* ─── INVENTORY TABLE ─── */
+  .inventory-section { background: var(--gray-50); }
+  .inventory-controls {
+    margin: 36px 0 28px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  }
+  .search-wrap { position: relative; }
+  .search-wrap input {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: 10px; padding: 12px 20px 12px 46px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--text);
+    width: 340px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--green); }
+  .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--gray-400); font-size: 1rem; }
+  .filter-wrap { display: flex; gap: 10px; flex-wrap: wrap; }
+  .filter-btn {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: 8px; padding: 10px 16px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; color: var(--gray-600);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active { background: var(--green); border-color: var(--green); color: white; }
+  select.filter-select {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: 8px; padding: 10px 36px 10px 16px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--gray-600);
+    cursor: pointer; outline: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center;
+  }
+
+  .table-wrap {
+    background: var(--white); border-radius: 14px;
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+  thead { background: var(--green-dark); }
+  thead th {
+    color: rgba(255,255,255,0.85); font-weight: 500; letter-spacing: 0.04em;
+    padding: 16px 18px; text-align: left; white-space: nowrap; font-size: 0.78rem;
+  }
+  thead th:first-child { border-radius: 0; }
+  tbody tr { border-bottom: 1px solid var(--gray-100); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(26,107,60,0.04); }
+  tbody td { padding: 14px 18px; color: var(--gray-800); vertical-align: top; line-height: 1.45; }
+  tbody td:first-child { font-weight: 600; color: var(--gray-400); font-size: 0.78rem; }
+  .td-mda { font-weight: 500; color: var(--green-dark); max-width: 260px; }
+  .td-purpose {
+    display: inline-block; padding: 3px 10px; border-radius: 100px;
+    font-size: 0.72rem; font-weight: 500;
+  }
+  .td-purpose.office { background: rgba(26,107,60,0.1); color: var(--green); }
+  .td-purpose.academic { background: rgba(201,162,39,0.1); color: #8b6914; }
+  .td-purpose.residential { background: rgba(59,130,246,0.1); color: #2563eb; }
+  .td-purpose.workshop { background: rgba(168,85,247,0.1); color: #7c3aed; }
+  .td-purpose.mixed { background: rgba(239,68,68,0.1); color: #dc2626; }
+  .td-purpose.park { background: rgba(20,184,166,0.1); color: #0f766e; }
+  .td-state { font-size: 0.8rem; }
+  .td-address { color: var(--gray-600); font-size: 0.78rem; max-width: 200px; }
+
+  .table-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+    border-top: 1px solid var(--gray-100);
+    font-size: 0.82rem; color: var(--gray-600);
+  }
+  .pagination { display: flex; gap: 6px; }
+  .pg-btn {
+    width: 34px; height: 34px; border-radius: 8px;
+    border: 1px solid var(--gray-200); background: var(--white);
+    cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--gray-600);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .pg-btn:hover { background: var(--gray-100); }
+  .pg-btn.active { background: var(--green); border-color: var(--green); color: white; }
+
+  /* ─── MINISTRY ANALYSIS ─── */
+  .analysis-section { background: var(--cream); }
+  .analysis-header { margin-bottom: 50px; }
+  .ministries-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .ministry-card {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: 14px; padding: 24px;
+    transition: all 0.25s;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .ministry-card:hover {
+    border-color: var(--green-light);
+    box-shadow: 0 8px 30px rgba(26,107,60,0.12);
+    transform: translateY(-3px);
+  }
+  .ministry-card-header { display: flex; align-items: flex-start; gap: 14px; }
+  .ministry-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--green), var(--green-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(26,107,60,0.25);
+  }
+  .ministry-name { font-weight: 600; font-size: 0.88rem; color: var(--text); line-height: 1.4; }
+  .ministry-bar-wrap { position: relative; }
+  .ministry-bar-label { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .ministry-bar-label span { font-size: 0.75rem; color: var(--gray-600); }
+  .ministry-bar-label strong { font-size: 0.75rem; font-weight: 700; color: var(--green); }
+  .ministry-bar-bg {
+    background: var(--gray-100); border-radius: 100px; height: 8px; overflow: hidden;
+  }
+  .ministry-bar-fill {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--green), var(--green-light));
+    transition: width 1s ease;
+  }
+
+  /* ─── GALLERY ─── */
+  .gallery-section { background: var(--white); }
+  .gallery-grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(2, 260px);
+    gap: 16px;
+  }
+  .gallery-item { overflow: hidden; border-radius: 14px; position: relative; }
+  .gallery-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+  .gallery-item:nth-child(2) { grid-column: span 4; }
+  .gallery-item:nth-child(3) { grid-column: span 3; }
+  .gallery-item:nth-child(4) { grid-column: span 3; }
+  .gallery-item:nth-child(5) { grid-column: span 4; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(14,63,34,0.7) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 20px;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay span { color: white; font-size: 0.82rem; font-weight: 500; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--green-dark);
+    padding: 70px 5% 40px;
+    color: rgba(255,255,255,0.7);
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+  .footer-brand { }
+  .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .footer-logo-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), #8b6914);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: white; font-weight: 900;
+  }
+  .footer-logo-text { color: white; font-weight: 600; font-size: 0.9rem; line-height: 1.3; }
+  .footer-logo-text span { display: block; color: var(--gold-light); font-size: 0.72rem; font-weight: 300; }
+  .footer-desc { font-size: 0.85rem; line-height: 1.7; color: rgba(255,255,255,0.5); max-width: 320px; }
+  .footer-col h4 { color: var(--gold-light); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.78rem; color: rgba(255,255,255,0.35);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 100px; }
+    .hero-image-col { display: none; }
+    .stats-strip { grid-template-columns: 1fr 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .mandates-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .ministries-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; height: 180px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-coat">🦅</div>
+    <div class="nav-title">
+      Federal Public Assets Management
+      <span>Federal Ministry of Housing & Urban Development</span>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#mandate">Mandate</a>
+    <a href="#inventory">Inventory</a>
+    <a href="#ministries">By Ministry</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">Federal Republic of Nigeria</div>
+    <h1>Safeguarding Nigeria's<br><em>Federal Public Assets</em></h1>
+    <p>The Department of Federal Public Assets Management is responsible for overseeing, maintaining, and protecting all federal government buildings and facilities across Nigeria's 36 states and the FCT.</p>
+    <div class="hero-actions">
+      <a href="#inventory" class="btn-primary">🗂️ View Asset Inventory</a>
+      <a href="#about" class="btn-outline">Learn More →</a>
+    </div>
+  </div>
+  <div class="hero-image-col">
+    <div class="hero-img-stack">
+      <img class="hero-img-main" src="https://images.unsplash.com/photo-1555636222-cae831e670b3?w=800&q=80&auto=format&fit=crop" alt="Federal Government Building">
+      <img class="hero-img-sec" src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=500&q=80&auto=format&fit=crop" alt="Government Architecture">
+      <div class="hero-stat-badge">
+        <div class="num">2,764+</div>
+        <div class="label">Assets Inventoried</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-num">2,764<span>+</span></div>
+    <div class="stat-label">Total Assets Catalogued</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">31</div>
+    <div class="stat-label">Ministries & Agencies Covered</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">36<span>+</span></div>
+    <div class="stat-label">States & FCT</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">229</div>
+    <div class="stat-label">Largest MDA Portfolio</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-image-wrap reveal">
+      <img class="about-img" src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&auto=format&fit=crop" alt="Nigerian Government Building">
+      <div class="about-quote">
+        <p>Ensuring every federal asset is functional, safe, and accessible for Nigerians.</p>
+        <strong>Our Mission</strong>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="section-tag">Who We Are</div>
+      <h2 class="section-title">A Department Built on Accountability & Stewardship</h2>
+      <p class="section-lead">The Department of Federal Public Assets Management (FPAM) operates under the Federal Ministry of Housing and Urban Development. It serves as the custodial authority for all federal government properties — ensuring they are well-maintained, properly documented, and efficiently managed on behalf of the Nigerian people.</p>
+      <div class="about-features">
+        <div class="feature-card">
+          <div class="feature-icon">🏛️</div>
+          <div class="feature-title">Asset Registry</div>
+          <div class="feature-desc">Maintains a comprehensive national database of all federal public buildings and facilities.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔧</div>
+          <div class="feature-title">Facility Maintenance</div>
+          <div class="feature-desc">Oversees repairs, renovations, and servicing of government infrastructure nationwide.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📋</div>
+          <div class="feature-title">Standards & Policy</div>
+          <div class="feature-desc">Develops and enforces maintenance standards, efficiency benchmarks, and safety guidelines.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤝</div>
+          <div class="feature-title">Outsourced Services</div>
+          <div class="feature-desc">Supervises third-party facility management service providers contracted by the government.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANDATE -->
+<section id="mandate" class="mandate-section">
+  <div class="reveal">
+    <div class="section-tag">Core Functions</div>
+    <h2 class="section-title">Our Mandate & Responsibilities</h2>
+    <p class="section-lead">The Department exercises oversight across six key operational pillars, ensuring the federal government's physical infrastructure is managed with efficiency, transparency, and national purpose.</p>
+  </div>
+  <div class="mandates-grid">
+    <div class="mandate-card reveal">
+      <div class="mandate-num">01</div>
+      <div class="mandate-title">Management of Federal Buildings</div>
+      <div class="mandate-body">Responsible for the administration and management of all federal government buildings, offices, secretariats, and other public facilities across Nigeria.</div>
+    </div>
+    <div class="mandate-card reveal">
+      <div class="mandate-num">02</div>
+      <div class="mandate-title">Maintenance & Repairs Oversight</div>
+      <div class="mandate-body">Coordinates and oversees the maintenance, repair, cleaning, and facility services for all properties under federal government jurisdiction.</div>
+    </div>
+    <div class="mandate-card reveal">
+      <div class="mandate-num">03</div>
+      <div class="mandate-title">National Asset Database</div>
+      <div class="mandate-body">Maintains a real-time, comprehensive inventory of all public assets nationwide — covering location, purpose, valuation, and condition assessment.</div>
+    </div>
+    <div class="mandate-card reveal">
+      <div class="mandate-num">04</div>
+      <div class="mandate-title">Standards Development</div>
+      <div class="mandate-body">Creates, updates, and enforces maintenance standards, efficiency benchmarks, and best practices for asset upkeep and facility management.</div>
+    </div>
+    <div class="mandate-card reveal">
+      <div class="mandate-num">05</div>
+      <div class="mandate-title">Third-Party Supervision</div>
+      <div class="mandate-body">Supervises outsourced facility management companies and service providers to ensure contractual obligations and quality standards are met.</div>
+    </div>
+    <div class="mandate-card reveal">
+      <div class="mandate-num">06</div>
+      <div class="mandate-title">Safety & Accessibility</div>
+      <div class="mandate-body">Ensures all federal buildings are structurally safe, operationally functional, and accessible to civil servants and members of the public.</div>
+    </div>
+  </div>
+</section>
+
+<!-- INVENTORY TABLE -->
+<section id="inventory" class="inventory-section">
+  <div class="reveal">
+    <div class="section-tag">Asset Inventory</div>
+    <h2 class="section-title">Public Buildings Register</h2>
+    <p class="section-lead">A searchable, filterable record of federal government buildings and facilities across all states — drawn from the official inventory database.</p>
+  </div>
+
+  <div class="inventory-controls">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search by MDA, state, address...">
+    </div>
+    <div class="filter-wrap">
+      <select class="filter-select" id="stateFilter">
+        <option value="">All States</option>
+      </select>
+      <select class="filter-select" id="purposeFilter">
+        <option value="">All Purpose</option>
+        <option value="Office Building">Office Building</option>
+        <option value="Academic Building">Academic</option>
+        <option value="Residential">Residential</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Mixed Use">Mixed Use</option>
+        <option value="Park">Park</option>
+      </select>
+      <button class="filter-btn" id="clearFilter">✕ Clear</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-scroll">
+      <table id="assetTable">
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Ministry / Agency (MDA)</th>
+            <th>Purpose</th>
+            <th>State</th>
+            <th>Local Govt</th>
+            <th>Address / Location</th>
+            <th>Landmark</th>
+            <th>Year</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+    </div>
+    <div class="table-footer">
+      <span id="tableCount">Showing records</span>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MINISTRY ANALYSIS -->
+<section id="ministries" class="analysis-section">
+  <div class="analysis-header reveal">
+    <div class="section-tag">Portfolio Analysis</div>
+    <h2 class="section-title">Assets by Ministry & Agency</h2>
+    <p class="section-lead">A breakdown of the number of facilities under each federal ministry and agency, reflecting the scope and reach of the federal government's physical infrastructure.</p>
+  </div>
+  <div class="ministries-grid" id="ministriesGrid">
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="gallery-section">
+  <div class="reveal">
+    <div class="section-tag">Visual Reference</div>
+    <h2 class="section-title">Federal Facilities Across Nigeria</h2>
+    <p class="section-lead">Placeholder imagery representing the types of federal government buildings inventoried by this department.</p>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&auto=format&fit=crop" alt="Government Office">
+      <div class="gallery-overlay"><span>Federal Secretariat Complex</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80&auto=format&fit=crop" alt="Court Building">
+      <div class="gallery-overlay"><span>Federal High Court Facility</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80&auto=format&fit=crop" alt="Education">
+      <div class="gallery-overlay"><span>Federal College Campus</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=600&q=80&auto=format&fit=crop" alt="Healthcare">
+      <div class="gallery-overlay"><span>Post Health Services</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=600&q=80&auto=format&fit=crop" alt="Highway">
+      <div class="gallery-overlay"><span>Federal Roads & Transport Office</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-icon">🦅</div>
+        <div class="footer-logo-text">
+          Federal Public Assets Management
+          <span>Federal Ministry of Housing & Urban Development</span>
+        </div>
+      </div>
+      <p class="footer-desc">Ensuring the responsible stewardship of Nigeria's federal public buildings and infrastructure for present and future generations.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About the Department</a></li>
+        <li><a href="#mandate">Our Mandate</a></li>
+        <li><a href="#inventory">Asset Inventory</a></li>
+        <li><a href="#ministries">Ministry Portfolios</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://fmhud.gov.ng" target="_blank">FMHUD Website</a></li>
+        <li><a href="#">Asset Standards</a></li>
+        <li><a href="#">Maintenance Policy</a></li>
+        <li><a href="#">Annual Reports</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Federal Secretariat, Abuja</a></li>
+        <li><a href="#">info@fmhud.gov.ng</a></li>
+        <li><a href="https://fmhud.gov.ng" target="_blank">fmhud.gov.ng</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Federal Ministry of Housing & Urban Development — Dept. of Federal Public Assets Management</span>
+    <span>Federal Republic of Nigeria</span>
+  </div>
+</footer>
+
+<script>
+// ─── DATA ───
+const rawData = [
+  {sn:1,mda:"Federal Ministry of Agriculture And Rural Development",purpose:"Office Building",state:"Lagos",lga:"Agege",address:"J8W8+8W3, Ifako Agege 101232, Lagos",landmark:"Maple Wood Estate",year:""},
+  {sn:2,mda:"Federal Ministry of Agriculture And Rural Development",purpose:"Office Building",state:"Lagos",lga:"Victoria Island",address:"1 Wilmot Point Road, Off Ahmadu Bello Way",landmark:"Nigerian Institute for Oceanography",year:""},
+  {sn:3,mda:"Federal Ministry of Agriculture And Rural Development",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Kapital Road, Area 11",landmark:"FCT Administration",year:""},
+  {sn:4,mda:"Veterinary Council Of Nigeria (VCN)",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"Plot 8, Zambezi Crescent, Maitama",landmark:"NBTI",year:""},
+  {sn:5,mda:"Nigeria Quarantine Services (NAQS)",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"Plot 81 Ralph Shodeinde Street",landmark:"Imo State Liaison Office",year:""},
+  {sn:6,mda:"Bank of Agriculture (BOA)",purpose:"Office Building",state:"Kaduna",lga:"Kaduna",address:"1 Yakubu Gowon Way, Sabongiri",landmark:"NIPOST General Post Office",year:""},
+  {sn:7,mda:"Agricultural And Rural Management Training Institute (ARMTI)",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"41, David Ejoor, Gudu",landmark:"ARMTI",year:""},
+  {sn:8,mda:"Nigerian Agricultural Insurance Corporation (NAIS)",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"Plot 950 Zone A.O Central Area, Abuja",landmark:"NIWRMC",year:""},
+  {sn:9,mda:"Nigeria Agricultural Seed Council",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"Km 29, Abuja-Lokoja Expressway, Sheda",landmark:"ASCA Oil Tank Farm",year:""},
+  {sn:10,mda:"National Centre For Agricultural Mechanization (NCAM)",purpose:"Office Building",state:"Kwara",lga:"Ilorin",address:"Km 20 Ilorin-Lokoja Highway, Idofian",landmark:"Famtech Communications",year:""},
+  {sn:11,mda:"Nigeria Institute Of Animal Science (NIAS)",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"Plot 1882 C13 Kabusa",landmark:"Breden Luxury Estate II",year:""},
+  {sn:12,mda:"Nigeria Institute Of Soil Science (NISS)",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"8 Abdullahi Ibrahim St, Mabushi",landmark:"Lighted Refined Energies LTD",year:""},
+  {sn:13,mda:"National Agricultural Land Development Authority (NALDA)",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"Area 11, Plot 802 Tafawa Balewa",landmark:"Garki Hospital",year:""},
+  {sn:14,mda:"Agricultural Research Council Of Nigeria (ARCN)",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"Plot 223D, Cadestral Zone B6 Mabushi",landmark:"Stanbic IBTC Bank",year:""},
+  {sn:15,mda:"Federal College Of Forestry",purpose:"Office Building",state:"Oyo",lga:"Ibadan",address:"Jericho St, Jericho 200284, Ibadan",landmark:"Foodco Supermarket",year:""},
+  {sn:53,mda:"Federal Ministry Of Labour And Productivity HQ",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"2nd Floor, Phase 1 Fed. Secretariat Complex, Shehu Shagari Way",landmark:"Federal Ministry of Health",year:""},
+  {sn:54,mda:"Federal Ministry Of Labour And Productivity",purpose:"Office Building",state:"Lagos",lga:"Island",address:"G94J+WGV, Lancaster St, Onike 101245, Lagos",landmark:"Queens College Yaba",year:""},
+  {sn:56,mda:"National Productivity Center",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"7 Cape Town, Wuse 904101, Abuja",landmark:"Newton Park Hotel",year:""},
+  {sn:57,mda:"National Directorate of Employment",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"1529 Nouakchott St, Wuse 904101, Abuja",landmark:"Unity Bank",year:""},
+  {sn:58,mda:"Michael Imodu Institute Of Labour Studies",purpose:"Office Building",state:"Kwara",lga:"Ilorin",address:"Km 7 Olunlade Village, Ajasse-Ipo Road",landmark:"Bovas Filling Station",year:""},
+  {sn:61,mda:"Federal Ministry Of Labour And Employment",purpose:"Office Building",state:"Akwa-Ibom",lga:"Uyo",address:"No. 4, Etim Ibanga Udosen Street",landmark:"Akpayak village close to Govt house",year:"1978"},
+  {sn:65,mda:"Federal Ministry Of Labour And Employment",purpose:"Office Building",state:"Borno",lga:"Maiduguri South",address:"Sir Kassim Ibrahim Road, Abbaganara",landmark:"New Prison",year:"1976"},
+  {sn:89,mda:"Federal Ministry Of Communication And Digital Economy",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"P.M.B. 12578 Federal Secretariat Complex Phase I, Shehu Shagari Way",landmark:"Fed. Ministry of Science & Tech",year:""},
+  {sn:90,mda:"Nigeria Postal Service",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"Abubakar Musa Argungu House, Plot 1279 Muhammadu Buhari Way",landmark:"Petral Digital Press",year:""},
+  {sn:92,mda:"Nigeria Communication Commission",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"Plot 423 Aguiyi Ironsi St, Maitama 900271",landmark:"Nigeria Investment Promotion Commission",year:""},
+  {sn:96,mda:"National Information Technology Development Agency",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"28, PortHarcourt Crescent, Off Gimbiya Street, Area 11, Garki",landmark:"Baptist Church",year:"2003"},
+  {sn:101,mda:"Federal Ministry Of Health",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"New Federal Secretariat Complex, Ahmadu Bello Way, Phase III",landmark:"Federal Secretariat",year:""},
+  {sn:102,mda:"Federal Ministry Of Health",purpose:"Office Building",state:"Lagos",lga:"Lagos",address:"443 Herbert Macaulay Way, Yaba 101245",landmark:"National Health Insurance Scheme",year:""},
+  {sn:303,mda:"Federal Roads Safety Corps FRSC",purpose:"Office Building",state:"Bauchi",lga:"Bauchi",address:"25 Sultan Abubakar RD, Fadama Mada Estate",landmark:"—",year:"2001"},
+  {sn:304,mda:"Federal Roads Safety Corps FRSC",purpose:"Office Building",state:"Jigawa",lga:"Dutse",address:"Off Garu RD, behind Unity Bank, Dutse",landmark:"—",year:"2009"},
+  {sn:305,mda:"Federal Roads Safety Corps FRSC",purpose:"Office Building",state:"Edo",lga:"Egor",address:"39 Jonathan Akpoborie St, BDPA Estate, Benin City",landmark:"BDPA Estate",year:"1992"},
+  {sn:532,mda:"Federal High Court",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"Shehu Shagari Way, Central District Abuja",landmark:"—",year:""},
+  {sn:533,mda:"Federal High Court",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"OAU Quarters, Kashim Ibrahim Way, Maitama",landmark:"—",year:""},
+  {sn:535,mda:"Federal High Court",purpose:"Office Building",state:"Ogun",lga:"Abeokuta",address:"IBB, Boulevard, Kobape Road, Oke Mosan",landmark:"Federal Secretariat",year:""},
+  {sn:652,mda:"Federal Ministry Of Education HQ",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"8th Floor, Fed. Sec. Complex, Garki",landmark:"—",year:""},
+  {sn:655,mda:"Universal Basic Education Commission (UBEC)",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"4, Gwani Street, Wuse Zone 4",landmark:"—",year:""},
+  {sn:659,mda:"National Universities Commission",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"26, Aguiyi Ironsi Street, Maitama",landmark:"—",year:""},
+  {sn:668,mda:"Joint Admissions Matriculation Board HQ",purpose:"Office Building",state:"Abuja",lga:"Bwari",address:"Suleja Road",landmark:"—",year:""},
+  {sn:877,mda:"Federal Ministry Of Environment HQ",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"340 Independence Way, Central Area, Abuja",landmark:"FCT",year:""},
+  {sn:878,mda:"Yankari National Park",purpose:"Park",state:"Bauchi",lga:"Alkaleri",address:"Yankari National Park, Bauchi, Nigeria",landmark:"—",year:""},
+  {sn:892,mda:"Federal Ministry Of Finance HQ",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Federal Secretariat, Abuja",landmark:"—",year:""},
+  {sn:941,mda:"Federal Ministry Of Foreign Affairs HQ",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"No.1, Federal Secretariat, Central Business District",landmark:"—",year:""},
+  {sn:1087,mda:"Budget Office Of The Federation",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Ahmadu Bello Way, Garki 900103, Abuja",landmark:"NPF Microfinance",year:""},
+  {sn:1088,mda:"National Planning Commission",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Plot 421 Constitution Ave, Central Business District",landmark:"Sanusi Dantata School",year:""},
+  {sn:1090,mda:"Federal Ministry of Works And Housing",purpose:"Office Building",state:"Lagos",lga:"Yaba",address:"G96G+54M, Yaba 101245, Lagos",landmark:"Harvey Road Health Centre",year:""},
+  {sn:1099,mda:"Federal Mortgage Bank Of Nigeria",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"The Mortgage House, 266 Tafawa Balewa Rd, Central Business District",landmark:"Ceddi Plaza",year:""},
+  {sn:1101,mda:"Federal Housing Authority",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"26 Julius Nyerere Cres, Asokoro 900231",landmark:"Oas Imperial Nigeria Limited",year:""},
+  {sn:1105,mda:"National Assembly",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Three Arms Zone, Abuja",landmark:"—",year:""},
+  {sn:1173,mda:"Federal Ministry of Science And Technology",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"10 Zambezi Crescent, Wuse 904101, Abuja",landmark:"Veterinary Council of Nigeria",year:""},
+  {sn:1229,mda:"Federal Ministry Of Water Resources",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Federal Secretariat, Abuja",landmark:"—",year:""},
+  {sn:1246,mda:"Federal Ministry of Mines and Steel Development",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Federal Secretariat, Abuja",landmark:"—",year:""},
+  {sn:1273,mda:"Public Complaints Commission",purpose:"Office Building",state:"FCT Abuja",lga:"AMAC",address:"PCC HQ, Maitama",landmark:"NUC",year:"1995"},
+  {sn:1273,mda:"Public Complaints Commission",purpose:"Office Building",state:"Adamawa",lga:"Yola North",address:"PCC, Kashim Way, Yola",landmark:"Prison Service Command",year:"2015"},
+  {sn:1382,mda:"ICPC Headquarters",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Plot 802, Constitution Avenue, Zone A9, Central Area",landmark:"—",year:""},
+  {sn:1404,mda:"EFCC Headquarters",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Plot 301/302, Research and Institutions District",landmark:"—",year:""},
+  {sn:1406,mda:"EFCC Lagos Command",purpose:"Office Building",state:"Lagos",lga:"Ikoyi",address:"No. 15A, Awolowo Road",landmark:"—",year:""},
+  {sn:1425,mda:"Federal Government Secretariat, Abeokuta",purpose:"Office Building",state:"Ogun",lga:"Abeokuta",address:"3rd Floor, Oke Mosan, Abeokuta",landmark:"NAFDAC",year:""},
+  {sn:1453,mda:"INEC Headquarters",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Zambezi Crescent, Maitama",landmark:"—",year:""},
+  {sn:1488,mda:"Central Bank of Nigeria",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Plot 33, Abubakar Tafawa Balewa Way, Central Business District",landmark:"—",year:""},
+  {sn:1489,mda:"Central Bank Of Nigeria Branch Office",purpose:"Office Building",state:"Abuja",lga:"AMAC",address:"Zaria Street, Garki II",landmark:"—",year:""},
+  {sn:1490,mda:"CBN State Office / Currency Center",purpose:"Office Building",state:"Abia",lga:"Umuahia",address:"Commissioners Quarters",landmark:"—",year:""},
+  {sn:1491,mda:"CBN State Office",purpose:"Office Building",state:"Adamawa",lga:"Yola",address:"CBN Galadima Aminu Road",landmark:"—",year:""},
+  {sn:1507,mda:"CBN State Office",purpose:"Office Building",state:"Kaduna",lga:"Kaduna",address:"1A Yakubu Gowon Way",landmark:"—",year:""},
+  {sn:1508,mda:"CBN State Office",purpose:"Office Building",state:"Kano",lga:"Kano",address:"4A, Lagos Street",landmark:"—",year:""},
+];
+
+// Ministry analysis data
+const ministryData = [
+  {name:"Federal Road Safety Corps",mdas:229,icon:"🛣️"},
+  {name:"Federal Ministry of Education",mdas:225,icon:"📚"},
+  {name:"Federal Ministry of Health",mdas:202,icon:"🏥"},
+  {name:"Federal Judiciary",mdas:120,icon:"⚖️"},
+  {name:"Federal Ministry of Foreign Affairs",mdas:116,icon:"🌍"},
+  {name:"Central Bank of Nigeria",mdas:93,icon:"🏦"},
+  {name:"Presidency",mdas:57,icon:"🦅"},
+  {name:"Federal Ministry of Science & Technology",mdas:56,icon:"🔬"},
+  {name:"Federal Ministry of Agriculture",mdas:52,icon:"🌾"},
+  {name:"Federal Ministry of Finance",mdas:49,icon:"💰"},
+  {name:"Federal Ministry of Works & Housing",mdas:43,icon:"🏗️"},
+  {name:"Federal Ministry of Labour",mdas:37,icon:"👷"},
+  {name:"Federal Ministry of Info & Culture",mdas:36,icon:"📺"},
+  {name:"Federal Ministry of Industry",mdas:26,icon:"🏭"},
+  {name:"INEC",mdas:35,icon:"🗳️"},
+  {name:"EFCC",mdas:22,icon:"🔒"},
+  {name:"ICPC",mdas:22,icon:"🔍"},
+  {name:"Public Complaints Commission",mdas:21,icon:"📋"},
+  {name:"Federal Ministry of Transport",mdas:19,icon:"✈️"},
+  {name:"Federal Ministry of Water Resources",mdas:17,icon:"💧"},
+  {name:"Federal Ministry of Environment",mdas:15,icon:"🌿"},
+  {name:"Federal Ministry of Communication",mdas:14,icon:"📡"},
+  {name:"Federal Ministry of Defence",mdas:31,icon:"🛡️"},
+  {name:"National Assembly",mdas:11,icon:"🏛️"},
+  {name:"Federal Ministry of Power",mdas:10,icon:"⚡"},
+  {name:"Federal Ministry of Mines & Steel",mdas:8,icon:"⛏️"},
+  {name:"Federal Ministry of Petroleum",mdas:7,icon:"🛢️"},
+  {name:"Federal Ministry of Sports & Youth",mdas:3,icon:"🏆"},
+  {name:"Federal Ministry of Women Affairs",mdas:3,icon:"👩"},
+  {name:"Federal Ministry of Niger Delta",mdas:3,icon:"🌊"},
+  {name:"Federal Ministry of Budget",mdas:3,icon:"📊"},
+];
+
+const maxMdas = Math.max(...ministryData.map(m=>m.mdas));
+
+// ─── TABLE ───
+let currentPage = 1;
+const rowsPerPage = 15;
+let filtered = [...rawData];
+
+function getPurposeClass(p) {
+  const lp = (p||'').toLowerCase();
+  if (lp.includes('office')) return 'office';
+  if (lp.includes('academic')) return 'academic';
+  if (lp.includes('residential')) return 'residential';
+  if (lp.includes('workshop')) return 'workshop';
+  if (lp.includes('mixed')) return 'mixed';
+  if (lp.includes('park')) return 'park';
+  return 'office';
+}
+
+function renderTable() {
+  const start = (currentPage-1)*rowsPerPage;
+  const slice = filtered.slice(start, start+rowsPerPage);
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = slice.map(r => `
+    <tr>
+      <td>${r.sn}</td>
+      <td class="td-mda">${r.mda}</td>
+      <td><span class="td-purpose ${getPurposeClass(r.purpose)}">${r.purpose||'—'}</span></td>
+      <td class="td-state">${r.state||'—'}</td>
+      <td>${r.lga||'—'}</td>
+      <td class="td-address">${r.address||'—'}</td>
+      <td>${r.landmark||'—'}</td>
+      <td>${r.year||'—'}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('tableCount').textContent = `Showing ${start+1}–${Math.min(start+rowsPerPage,filtered.length)} of ${filtered.length} records`;
+  renderPagination();
+}
+
+function renderPagination() {
+  const totalPages = Math.ceil(filtered.length/rowsPerPage);
+  const pg = document.getElementById('pagination');
+  pg.innerHTML = '';
+  const makeBtn = (label, page, active) => {
+    const b = document.createElement('button');
+    b.className = 'pg-btn' + (active?' active':'');
+    b.textContent = label;
+    b.onclick = () => { currentPage = page; renderTable(); };
+    return b;
+  };
+  if (currentPage > 1) pg.appendChild(makeBtn('‹', currentPage-1, false));
+  for (let i=Math.max(1,currentPage-2); i<=Math.min(totalPages,currentPage+2); i++) {
+    pg.appendChild(makeBtn(i, i, i===currentPage));
+  }
+  if (currentPage < totalPages) pg.appendChild(makeBtn('›', currentPage+1, false));
+}
+
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const state = document.getElementById('stateFilter').value;
+  const purpose = document.getElementById('purposeFilter').value;
+  filtered = rawData.filter(r => {
+    const matchSearch = !search || (r.mda+r.state+r.lga+r.address+r.landmark).toLowerCase().includes(search);
+    const matchState = !state || r.state.toLowerCase().includes(state.toLowerCase());
+    const matchPurpose = !purpose || r.purpose === purpose;
+    return matchSearch && matchState && matchPurpose;
+  });
+  currentPage = 1;
+  renderTable();
+}
+
+// Populate state filter
+const states = [...new Set(rawData.map(r=>r.state).filter(Boolean))].sort();
+const stateFilter = document.getElementById('stateFilter');
+states.forEach(s => {
+  const o = document.createElement('option'); o.value=s; o.textContent=s;
+  stateFilter.appendChild(o);
+});
+
+document.getElementById('searchInput').addEventListener('input', applyFilters);
+document.getElementById('stateFilter').addEventListener('change', applyFilters);
+document.getElementById('purposeFilter').addEventListener('change', applyFilters);
+document.getElementById('clearFilter').addEventListener('click', () => {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('stateFilter').value = '';
+  document.getElementById('purposeFilter').value = '';
+  applyFilters();
+});
+
+renderTable();
+
+// ─── MINISTRIES ───
+const grid = document.getElementById('ministriesGrid');
+ministryData.sort((a,b)=>b.mdas-a.mdas).forEach(m => {
+  const pct = Math.round((m.mdas/maxMdas)*100);
+  grid.innerHTML += `
+    <div class="ministry-card reveal">
+      <div class="ministry-card-header">
+        <div class="ministry-icon">${m.icon}</div>
+        <div class="ministry-name">${m.name}</div>
+      </div>
+      <div class="ministry-bar-wrap">
+        <div class="ministry-bar-label">
+          <span>Assets / Facilities</span>
+          <strong>${m.mdas} records</strong>
+        </div>
+        <div class="ministry-bar-bg">
+          <div class="ministry-bar-fill" style="width:${pct}%"></div>
+        </div>
+      </div>
+    </div>`;
+});
+
+// ─── SCROLL REVEAL ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Animate bars
+setTimeout(() => {
+  document.querySelectorAll('.ministry-bar-fill').forEach(el => {
+    el.style.transition = 'width 1.2s ease';
+  });
+}, 500);
+</script>
+</body>
+</html>
