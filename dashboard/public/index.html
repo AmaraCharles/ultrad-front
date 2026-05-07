@@ -2056,8 +2056,8 @@ function getInvestmentPlans() {
       {
         id: 'basic',
         name: 'Basic Package',
-        minInvestment: 500,
-        maxInvestment: 3999,
+        minInvestment: 3000,
+        maxInvestment: 25000,
         dailyProfitRate: 0.004, // 2% daily
         duration: 30, // days
         durationn: 24, // days
@@ -2067,8 +2067,8 @@ function getInvestmentPlans() {
       {
         id: 'silver',
         name: 'Silver Plan',
-        minInvestment: 4000,
-        maxInvestment: 9999,
+        minInvestment: 25000,
+        maxInvestment: 50000,
         dailyProfitRate: 0.005, // 3.5% daily
         duration: 30,
          durationn: 720, // days
@@ -2078,8 +2078,8 @@ function getInvestmentPlans() {
       {
         id: 'gold',
         name: 'Gold Plan',
-        minInvestment: 10000,
-        maxInvestment: 49999,
+        minInvestment: 100000,
+        maxInvestment: 300000,
         dailyProfitRate: 0.006, // 5% daily
         duration: 30,
          durationn: 720, // days
@@ -2089,8 +2089,8 @@ function getInvestmentPlans() {
       {
         id: 'diamond',
         name: 'Diamond Plan',
-        minInvestment: 50000,
-        maxInvestment: 99999,
+        minInvestment: 300000,
+        maxInvestment: 500000,
         dailyProfitRate: 0.013, // 7.5% daily
         duration: 1095,
          durationn: 26280,
@@ -2101,8 +2101,8 @@ function getInvestmentPlans() {
        {
         id: 'ultimate',
         name: 'Ultimate Plan',
-        minInvestment: 100000,
-        maxInvestment: 1000000,
+        minInvestment: 1000000,
+        maxInvestment: 3000000,
         dailyProfitRate: 0.013, // 7.5% daily
         duration: 1095,
          durationn: 26280, // hours
@@ -4167,10 +4167,11 @@ function renderFundAccountPage() {
   <!-- 👇 Wallet Display Area -->
   <div id="walletDisplay" style="display: none; text-align: center; margin-bottom: 1.5rem;">
     <img id="walletQr" src="" alt="Wallet QR" style="width: 140px; height: 140px; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #eee;">
-    <p style="font-size: 0.95rem; word-break: break-all; margin: 0;">
+    <p style="font-size: 0.95rem; word-break: break-all; margin: 0 0 0.75rem 0;">
       <strong id="walletLabel"></strong>: 
       <span id="walletAddress"></span>
     </p>
+    <button id="copyWalletBtn" onclick="(function(){const addr=document.getElementById('walletAddress').textContent;navigator.clipboard.writeText(addr).then(function(){const btn=document.getElementById('copyWalletBtn');btn.textContent='✓ Copied!';btn.style.color='hsl(145,65%,40%)';setTimeout(function(){btn.textContent='📋 Copy Address';btn.style.color='';},2000);});})()" style="padding:0.5rem 1.25rem;border:1px solid hsl(var(--border));border-radius:0.375rem;background:transparent;color:hsl(var(--foreground));cursor:pointer;font-size:0.875rem;font-weight:500;">📋 Copy Address</button>
   </div>
 
   <form id="depositForm">
@@ -4859,18 +4860,6 @@ function renderInvestmentPlansPage() {
           <div>
             <div class="text-muted small">Max Investment</div>
             <div style="font-weight: 600; margin-top: 0.25rem;">$${plan.maxInvestment.toLocaleString()}</div>
-          </div>
-          <div>
-            <div class="text-muted small">Daily Profit</div>
-            <div style="font-weight: 600; color: hsl(var(--chart-2)); margin-top: 0.25rem;">${(plan.dailyProfitRate * 100).toFixed(2)}%</div>
-          </div>
-          <div>
-            <div class="text-muted small">Total Return</div>
-            <div style="font-weight: 600; color: hsl(var(--chart-2)); margin-top: 0.25rem;">${totalReturn.toFixed(0)}%</div>
-          </div>
-          <div>
-            <div class="text-muted small">Duration</div>
-            <div style="font-weight: 600; margin-top: 0.25rem;">${plan.durationn} Hours</div>
           </div>
           <div>
             <div class="text-muted small">Your Balance</div>

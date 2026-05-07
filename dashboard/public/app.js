@@ -66,8 +66,8 @@ function getInvestmentPlans() {
      {
         id: 'basic',
         name: 'Basic Package',
-        minInvestment: 500,
-        maxInvestment: 3999,
+        minInvestment: 3000,
+        maxInvestment: 25000,
         dailyProfitRate: 0.004, // 2% daily
         duration: 30, // days
         durationn: 24, // days
@@ -77,8 +77,8 @@ function getInvestmentPlans() {
       {
         id: 'silver',
         name: 'Silver Plan',
-        minInvestment: 4000,
-        maxInvestment: 9999,
+        minInvestment: 25000,
+        maxInvestment: 50000,
         dailyProfitRate: 0.005, // 3.5% daily
         duration: 30,
          durationn: 720, // days
@@ -88,8 +88,8 @@ function getInvestmentPlans() {
       {
         id: 'gold',
         name: 'Gold Plan',
-        minInvestment: 10000,
-        maxInvestment: 49999,
+        minInvestment: 100000,
+        maxInvestment: 300000,
         dailyProfitRate: 0.006, // 5% daily
         duration: 30,
         monthly:0.40,
@@ -100,8 +100,8 @@ function getInvestmentPlans() {
       {
         id: 'diamond',
         name: 'Diamond Plan',
-        minInvestment: 50000,
-        maxInvestment: 99999,
+        minInvestment: 300000,
+        maxInvestment: 500000,
         dailyProfitRate: 0.013, // 7.5% daily
         duration: 1095,
          durationn: 26280,
@@ -112,8 +112,8 @@ function getInvestmentPlans() {
        {
         id: 'ultimate',
         name: 'Ultimate Plan',
-        minInvestment: 100000,
-        maxInvestment: 1000000,
+        minInvestment: 1000000,
+        maxInvestment: 3000000,
         dailyProfitRate: 0.013, // 7.5% daily
         duration: 1095,
          durationn: 26280, // hours
@@ -2054,10 +2054,43 @@ function renderFundAccountPage() {
   <!-- 👇 Wallet Display Area -->
   <div id="walletDisplay" style="display: none; text-align: center; margin-bottom: 1.5rem;">
     <img id="walletQr" src="" alt="Wallet QR" style="width: 140px; height: 140px; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #eee;">
-    <p style="font-size: 0.95rem; word-break: break-all; margin: 0;">
+    <p style="font-size: 0.95rem; word-break: break-all; margin: 0 0 0.75rem 0;">
       <strong id="walletLabel"></strong>: 
       <span id="walletAddress"></span>
     </p>
+    <button id="copyAddressBtn" onclick="(function(){
+      const addr = document.getElementById('walletAddress').textContent;
+      navigator.clipboard.writeText(addr).then(function(){
+        const btn = document.getElementById('copyAddressBtn');
+        const orig = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        btn.style.backgroundColor = 'hsl(var(--chart-2))';
+        setTimeout(function(){ btn.textContent = orig; btn.style.backgroundColor = ''; }, 2000);
+      }).catch(function(){
+        const ta = document.createElement('textarea');
+        ta.value = addr;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        const btn = document.getElementById('copyAddressBtn');
+        btn.textContent = '✅ Copied!';
+        setTimeout(function(){ btn.textContent = '📋 Copy Address'; }, 2000);
+      });
+    })()" style="
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 1.1rem;
+      border: 1px solid hsl(var(--border));
+      border-radius: 6px;
+      background: hsl(var(--muted));
+      color: hsl(var(--foreground));
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    ">📋 Copy Address</button>
   </div>
 
   <form id="depositForm">
@@ -2070,7 +2103,7 @@ function renderFundAccountPage() {
         <option value="solana">Solana</option>
         <option value="usdt">USDT (TRC20)</option>
         <option value="usdt2">USDT (ERC20)</option>
-        <option value="litecoin">LTC</option>
+        
        
       </select>
     </div>
@@ -2747,29 +2780,6 @@ function renderInvestmentPlansPage() {
             <div class="text-muted small">Max Investment</div>
             <div style="font-weight: 600; margin-top: 0.25rem;">$${plan.maxInvestment.toLocaleString()}</div>
           </div>
-          <div>
-            <div class="text-muted small">Daily Profit</div>
-            <div style="font-weight: 600; color: hsl(var(--chart-2)); margin-top: 0.25rem;">${(plan.dailyProfitRate * 100).toFixed(2)}%</div>
-          </div>
-
-         <div>
-  <div class="text-muted small">Monthly Profit</div>
-  <div style="font-weight: 600; color: hsl(var(--chart-2)); margin-top: 0.25rem;">
-    ${((plan.monthly ?? totalReturn)).toFixed(2)}%
-  </div>
-</div>
-          <div>
-            <div class="text-muted small">Total Return</div>
-            <div style="font-weight: 600; color: hsl(var(--chart-2)); margin-top: 0.25rem;">${totalReturn.toFixed(0)}%</div>
-          </div>
-         <div>
-  <div class="text-muted small">Duration</div>
-  <div style="font-weight: 600; margin-top: 0.25rem;">
-    ${plan.durationn >= 8760 
-      ? (plan.durationn / 8760).toFixed(2) + ' Year(s)' 
-      : plan.durationn + ' Hour(s)'}
-  </div>
-</div>
           <div>
             <div class="text-muted small">Your Balance</div>
             <div style="font-weight: 600; margin-top: 0.25rem;">$${user.balance.toFixed(2)}</div>
