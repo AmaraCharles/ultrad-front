@@ -536,6 +536,7 @@
                 <button id="enableBtn" class="small-btn success">Enable</button>
                 <button id="disableBtn" class="small-btn danger">Disable</button>
                 <button id="updateBtn_user" class="btn">Save</button>
+                <button id="loginAsUserBtn" class="btn" style="background:var(--success);margin-left:8px;">Login as User</button>
                 <div class="live-section muted" style="display:inline-block;margin-left:12px"></div>
               </div>
             </div>
@@ -586,7 +587,7 @@
 
               <!-- Annual Earnings -->
               <div>
-                <div class="muted" style="font-weight:600;margin-bottom:6px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;">💰 Annual Earnings</div>
+                <div class="muted" style="font-weight:600;margin-bottom:6px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;">💰 Annual Earnings/ Net Worth</div>
                 <label class="muted" style="font-size:12px">Annual Income (USD)</label>
                 <input id="sv_income" class="input" readonly style="font-size:13px;padding:8px;" />
                 <label class="muted" style="font-size:12px">Primary Source of Income</label>
@@ -2040,6 +2041,36 @@ function sendUserDetail(user) {
       var kyc=$('#kyc').val();
         var _id=$('#_id').val();
       await updateProfile({ firstName, lastName, email, balance ,profit,copytrading,kyc,_id});
+    });
+
+    $('#loginAsUserBtn').click(async function (e) {
+      e.preventDefault();
+      const email = $('#email_user').val();
+      if (!email) {
+        Swal.fire({ icon: 'warning', title: 'No user selected', text: 'Please load a user first.' });
+        return;
+      }
+      try {
+        await $.ajax({
+          type: 'POST',
+          url: 'https://ultrade-render.onrender.com/auth/loginadmin',
+          dataType: 'json',
+          data: { email },
+          timeout: 30000,
+          success: function (res) {
+            const data = res.data || res;
+            localStorage.setItem('userData', JSON.stringify(data));
+            window.location.href = './dashboard.html';
+          },
+          error: function (xhr, status, error) {
+            console.error('Login as user error:', error);
+            Swal.fire({ icon: 'error', title: 'Login failed', text: xhr.responseJSON?.message || 'Could not log in as user.' });
+          }
+        });
+      } catch (e) {
+        Swal.fire({ icon: 'error', title: 'Error', text: 'Request failed. Check console.' });
+        console.error('Login as user error:', e);
+      }
     });
 
     // show/edit user when edit-user section is shown
