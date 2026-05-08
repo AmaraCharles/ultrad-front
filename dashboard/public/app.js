@@ -125,7 +125,7 @@ function getInvestmentPlans() {
         id: 'inner',
         name: 'inner circle Plan',
         minInvestment: 5000000,
-        maxInvestment: unlimited,
+        maxInvestment: "unlimited",
         dailyProfitRate: 0.064, // 7.5% daily
         duration: 7,
          durationn: 120, // days
