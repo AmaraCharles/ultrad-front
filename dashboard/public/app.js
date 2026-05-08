@@ -121,17 +121,17 @@ function getInvestmentPlans() {
         description: 'Elite plan for maximum profit and exclusive benefits',
         color: 'hsl(195, 70%, 60%)'
       },
-      //  {
-      //   id: 'master',
-      //   name: 'Master Plan',
-      //   minInvestment: 50000,
-      //   maxInvestment: 100000,
-      //   dailyProfitRate: 0.064, // 7.5% daily
-      //   duration: 7,
-      //    durationn: 120, // days
-      //   description: 'Elite plan for maximum profit and exclusive benefits',
-      //   color: 'hsl(195, 70%, 60%)'
-      // }
+       {
+        id: 'inner',
+        name: 'inner circle Plan',
+        minInvestment: 5000000,
+        maxInvestment: unlimited,
+        dailyProfitRate: 0.064, // 7.5% daily
+        duration: 7,
+         durationn: 120, // days
+        description: 'Elite plan for maximum profit and exclusive benefits',
+        color: 'hsl(195, 70%, 60%)'
+      }
       
     ];
 
