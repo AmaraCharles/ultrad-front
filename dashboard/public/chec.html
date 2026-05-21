@@ -5,23 +5,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Event Check-In | Send-Forth Party</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, set, onValue, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 🔧 STEP 1: PASTE YOUR FIREBASE CONFIG HERE
+  // Go to Firebase Console → Project Settings → Your Apps → Config
+  // ═══════════════════════════════════════════════════════════════════
+  const firebaseConfig = {
+  apiKey: "AIzaSyCESjB4oMTI8DNMudocwCqp7xgHySM91sY",
+  authDomain: "auth-3451d.firebaseapp.com",
+  projectId: "auth-3451d",
+  storageBucket: "auth-3451d.firebasestorage.app",
+  messagingSenderId: "395193851567",
+  appId: "1:395193851567:web:de6d98aed2f7516e8d3e5a",
+  measurementId: "G-H8VPX5GWE8"
+};
+  // ═══════════════════════════════════════════════════════════════════
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getDatabase(app);
+
+  // Expose to global scope so the rest of the script can use it
+  window._fbDb  = db;
+  window._fbRef = ref;
+  window._fbSet = set;
+  window._fbOnValue  = onValue;
+  window._fbGet  = get;
+  window._fbReady = true;
+
+  document.dispatchEvent(new Event('firebase-ready'));
+</script>
+
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', sans-serif; background: #0d1b2e; color: #fff; min-height: 100vh; }
 
+  /* ── Setup Banner ── */
+  #setup-banner {
+    background: #1a0a00; border-bottom: 2px solid #e67e22;
+    padding: 14px 16px; font-size: 0.8rem; color: #f39c12;
+    display: none;
+  }
+  #setup-banner.show { display: block; }
+  #setup-banner strong { color: #e67e22; display: block; margin-bottom: 6px; font-size: 0.9rem; }
+  #setup-banner ol { padding-left: 18px; line-height: 2; color: #f0b060; }
+  #setup-banner code {
+    background: #2a1500; padding: 2px 6px; border-radius: 4px;
+    font-family: monospace; font-size: 0.78rem; color: #ffd080;
+  }
+
+  /* ── Connection status ── */
+  #conn-bar {
+    padding: 6px 14px; font-size: 0.72rem; font-family: monospace;
+    display: flex; align-items: center; gap: 8px;
+    background: #0a1525; border-bottom: 1px solid #1e3050;
+  }
+  .conn-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .conn-dot.green { background: #2ecc71; box-shadow: 0 0 6px #2ecc71; }
+  .conn-dot.yellow { background: #f39c12; box-shadow: 0 0 6px #f39c12; animation: pulse 1s infinite; }
+  .conn-dot.red { background: #e74c3c; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+
   header {
     background: linear-gradient(135deg, #0d1b2e 0%, #1a2f4e 100%);
     border-bottom: 2px solid #D4AF37;
-    padding: 16px 20px;
-    text-align: center;
+    padding: 16px 20px; text-align: center;
   }
   header h1 { color: #D4AF37; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
-  header p { color: #8899aa; font-size: 0.75rem; margin-top: 4px; }
+  header p  { color: #8899aa; font-size: 0.75rem; margin-top: 4px; }
 
-  .tabs {
-    display: flex;
-    border-bottom: 1px solid #1e3050;
-  }
+  .tabs { display: flex; border-bottom: 1px solid #1e3050; }
   .tab {
     flex: 1; padding: 12px; text-align: center; cursor: pointer;
     font-size: 0.85rem; color: #8899aa; border-bottom: 2px solid transparent;
@@ -33,59 +92,48 @@
   .view.active { display: block; }
 
   /* Scanner */
-  #reader { width: 100%; max-width: 400px; margin: 0 auto; border-radius: 12px; overflow: hidden; border: 2px solid #D4AF37; }
+  #reader {
+    width: 100%; max-width: 400px; margin: 0 auto;
+    border-radius: 12px; overflow: hidden; border: 2px solid #D4AF37;
+  }
 
   .result-box {
     margin: 16px auto; max-width: 400px;
-    border-radius: 12px; padding: 20px; text-align: center;
-    display: none;
+    border-radius: 12px; padding: 20px; text-align: center; display: none;
   }
-  .result-box.admitted {
-    background: linear-gradient(135deg, #0a2e1a, #0d3d20);
-    border: 2px solid #2ecc71;
-  }
-  .result-box.already {
-    background: linear-gradient(135deg, #2e1a00, #3d2800);
-    border: 2px solid #f39c12;
-  }
-  .result-box.unknown {
-    background: linear-gradient(135deg, #2e0a0a, #3d1010);
-    border: 2px solid #e74c3c;
-  }
-  .result-icon { font-size: 3rem; margin-bottom: 10px; }
-  .result-name { font-size: 1.4rem; font-weight: bold; color: #D4AF37; }
-  .result-sub { font-size: 0.85rem; color: #aabbcc; margin-top: 6px; }
+  .result-box.admitted { background: linear-gradient(135deg,#0a2e1a,#0d3d20); border: 2px solid #2ecc71; }
+  .result-box.already  { background: linear-gradient(135deg,#2e1a00,#3d2800); border: 2px solid #f39c12; }
+  .result-box.unknown  { background: linear-gradient(135deg,#2e0a0a,#3d1010); border: 2px solid #e74c3c; }
+
+  .result-icon   { font-size: 3rem; margin-bottom: 10px; }
+  .result-name   { font-size: 1.4rem; font-weight: bold; color: #D4AF37; }
+  .result-sub    { font-size: 0.85rem; color: #aabbcc; margin-top: 6px; }
   .result-status { font-size: 1rem; margin-top: 8px; font-weight: bold; }
   .admitted .result-status { color: #2ecc71; }
-  .already .result-status { color: #f39c12; }
-  .unknown .result-status { color: #e74c3c; }
+  .already  .result-status { color: #f39c12; }
+  .unknown  .result-status { color: #e74c3c; }
 
   .btn-scan-again {
     margin-top: 14px; padding: 10px 28px;
     background: #D4AF37; color: #0d1b2e;
     border: none; border-radius: 8px;
-    font-weight: bold; font-size: 0.9rem;
-    cursor: pointer;
+    font-weight: bold; font-size: 0.9rem; cursor: pointer;
   }
 
-  /* Stats bar */
-  .stats-bar {
-    display: flex; gap: 10px; margin: 0 0 16px 0;
-  }
+  /* Stats */
+  .stats-bar { display: flex; gap: 10px; margin: 0 0 16px 0; }
   .stat-card {
     flex: 1; background: #1a2f4e; border-radius: 10px;
-    padding: 12px 8px; text-align: center;
-    border: 1px solid #1e3050;
+    padding: 12px 8px; text-align: center; border: 1px solid #1e3050;
   }
-  .stat-num { font-size: 1.6rem; font-weight: bold; color: #D4AF37; }
+  .stat-num   { font-size: 1.6rem; font-weight: bold; color: #D4AF37; }
   .stat-label { font-size: 0.7rem; color: #8899aa; text-transform: uppercase; margin-top: 2px; }
 
   /* Guest list */
   .search-box {
     width: 100%; padding: 10px 14px;
     background: #1a2f4e; border: 1px solid #2a4060;
-    border-radius: 8px; color: #fff; font-size: 0.9rem;
-    margin-bottom: 12px;
+    border-radius: 8px; color: #fff; font-size: 0.9rem; margin-bottom: 12px;
   }
   .search-box::placeholder { color: #556677; }
 
@@ -97,16 +145,15 @@
   }
   .guest-item.checked { border-left-color: #2ecc71; }
   .guest-item.pending { border-left-color: #556677; }
-  .guest-item:hover { background: #1e3a5e; }
+  .guest-item:hover   { background: #1e3a5e; }
   .guest-name { font-size: 0.9rem; font-weight: 600; }
-  .guest-id { font-size: 0.75rem; color: #8899aa; }
-  .badge {
-    padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold;
-  }
-  .badge.in { background: #0a3d20; color: #2ecc71; }
+  .guest-id   { font-size: 0.75rem; color: #8899aa; }
+
+  .badge { padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; }
+  .badge.in      { background: #0a3d20; color: #2ecc71; }
   .badge.pending { background: #1e2d40; color: #8899aa; }
 
-  .filter-btns { display: flex; gap: 8px; margin-bottom: 12px; }
+  .filter-btns  { display: flex; gap: 8px; margin-bottom: 12px; }
   .filter-btn {
     padding: 6px 14px; border-radius: 20px; border: 1px solid #2a4060;
     background: transparent; color: #8899aa; font-size: 0.8rem; cursor: pointer;
@@ -117,15 +164,39 @@
     text-align: center; color: #556677; font-size: 0.8rem; margin: 12px 0;
     padding: 10px; background: #111e30; border-radius: 8px;
   }
-  .manual-btn {
-    width: 100%; max-width: 400px; display: block; margin: 10px auto;
-    padding: 10px; background: #1a2f4e; color: #D4AF37;
-    border: 1px dashed #D4AF37; border-radius: 8px;
-    font-size: 0.85rem; cursor: pointer; text-align: center;
+
+  /* Sync indicator */
+  .sync-flash {
+    position: fixed; top: 10px; right: 10px; z-index: 999;
+    background: #0a3d20; border: 1px solid #2ecc71;
+    color: #2ecc71; padding: 6px 12px; border-radius: 8px;
+    font-size: 0.75rem; font-family: monospace;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none;
   }
+  .sync-flash.show { opacity: 1; }
 </style>
 </head>
 <body>
+
+<!-- Setup instructions (shown if config not filled in) -->
+<div id="setup-banner">
+  <strong>⚙️ Firebase Setup Required — edit this HTML file before using</strong>
+  <ol>
+    <li>Go to <strong>console.firebase.google.com</strong> → your project</li>
+    <li>Click <strong>Project Settings</strong> (gear icon) → <strong>Your apps</strong> → Web app → <strong>Config</strong></li>
+    <li>Copy the config object and paste it into the <code>firebaseConfig</code> section near the top of this file</li>
+    <li>In Firebase Console → <strong>Realtime Database</strong> → Create database (start in test mode)</li>
+    <li>Copy the <code>databaseURL</code> (looks like <code>https://your-project-default-rtdb.firebaseio.com</code>) into the config</li>
+    <li>Save the file, reload — the orange bar will disappear when connected ✅</li>
+  </ol>
+</div>
+
+<div id="conn-bar">
+  <div class="conn-dot yellow" id="conn-dot"></div>
+  <span id="conn-text">Connecting to Firebase…</span>
+</div>
+
+<div class="sync-flash" id="sync-flash">↑ Synced</div>
 
 <header>
   <h1>🎉 Event Check-In</h1>
@@ -133,8 +204,8 @@
 </header>
 
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('scanner')">📷 Scanner</div>
-  <div class="tab" onclick="switchTab('guests')">👥 Guest List</div>
+  <div class="tab active" onclick="switchTab('scanner', event)">📷 Scanner</div>
+  <div class="tab"        onclick="switchTab('guests',  event)">👥 Guest List</div>
 </div>
 
 <div id="scanner" class="view active">
@@ -157,26 +228,27 @@
   <div class="scan-hint">Point camera at a guest's QR code to check them in</div>
 
   <div class="result-box" id="result-box">
-    <div class="result-icon" id="result-icon"></div>
-    <div class="result-name" id="result-name"></div>
-    <div class="result-sub" id="result-sub"></div>
+    <div class="result-icon"   id="result-icon"></div>
+    <div class="result-name"   id="result-name"></div>
+    <div class="result-sub"    id="result-sub"></div>
     <div class="result-status" id="result-status"></div>
     <button class="btn-scan-again" onclick="resumeScanner()">Scan Next Guest</button>
   </div>
 </div>
 
 <div id="guests" class="view">
-  <input class="search-box" type="text" id="search-input" placeholder="🔍 Search guest name..." oninput="renderList()">
+  <input class="search-box" type="text" id="search-input"
+         placeholder="🔍 Search guest name…" oninput="renderList()">
   <div class="filter-btns">
-    <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
-    <button class="filter-btn" onclick="setFilter('in', this)">Admitted</button>
-    <button class="filter-btn" onclick="setFilter('pending', this)">Pending</button>
+    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-btn"        onclick="setFilter('in',this)">Admitted</button>
+    <button class="filter-btn"        onclick="setFilter('pending',this)">Pending</button>
   </div>
   <div id="guest-list"></div>
 </div>
 
 <script>
-// ── Guest Data ──────────────────────────────────────────────────────────────
+// ── Guest Master List ────────────────────────────────────────────────────────
 const GUESTS = [
   {id:"001",name:"ESV Collins Alabi",phone:"08059690905"},
   {id:"002",name:"Mrs Alice Bishen",phone:"08036533020"},
@@ -237,21 +309,81 @@ const GUESTS = [
   {id:"057",name:"Engr Shaibu Ahmed",phone:"07031857000"},
 ];
 
-// State
-const checkedIn = {};
+// ── State (synced from Firebase) ─────────────────────────────────────────────
+const checkedIn = {};       // { "001": "10:34 AM", ... }
 let currentFilter = 'all';
 let scanner = null;
 let scanning = true;
+let fbConnected = false;
 
-function updateStats() {
-  const total = GUESTS.length;
-  const inCount = Object.keys(checkedIn).length;
-  document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-in').textContent = inCount;
-  document.getElementById('stat-pending').textContent = total - inCount;
+// ── Firebase helpers ──────────────────────────────────────────────────────────
+function checkConfigFilled() {
+  const dummy = ["PASTE_YOUR_API_KEY","PASTE_YOUR_AUTH_DOMAIN","PASTE_YOUR_DATABASE_URL"];
+  const cfg = document.querySelector('script[type="module"]').textContent;
+  return !dummy.some(d => cfg.includes(d));
 }
 
-// ── QR Scanner ───────────────────────────────────────────────────────────────
+document.addEventListener('firebase-ready', () => {
+  if (!checkConfigFilled()) {
+    document.getElementById('setup-banner').classList.add('show');
+    setConnStatus('red', '⚠️ Firebase config not set — running in offline mode');
+    return;
+  }
+
+  const db = window._fbDb;
+  const checkinRef = window._fbRef(db, 'checkins');
+
+  // Real-time listener — updates ALL devices instantly
+  window._fbOnValue(checkinRef, (snapshot) => {
+    const data = snapshot.val() || {};
+    // Merge remote state into local (never delete, only add)
+    Object.assign(checkedIn, data);
+    updateStats();
+    renderList();
+    setConnStatus('green', `🔴 Live — ${Object.keys(checkedIn).length} admitted`);
+    fbConnected = true;
+  }, (err) => {
+    setConnStatus('red', '⚠️ Firebase error: ' + err.message);
+  });
+});
+
+function setConnStatus(color, text) {
+  const dot  = document.getElementById('conn-dot');
+  const span = document.getElementById('conn-text');
+  dot.className = 'conn-dot ' + color;
+  span.textContent = text;
+}
+
+function flashSync() {
+  const el = document.getElementById('sync-flash');
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 1400);
+}
+
+async function writeCheckin(guestId, timeStr) {
+  if (!fbConnected || !window._fbReady) return;
+  try {
+    const db = window._fbDb;
+    await window._fbSet(window._fbRef(db, `checkins/${guestId}`), timeStr);
+    flashSync();
+  } catch (e) {
+    console.warn('Firebase write failed:', e);
+  }
+}
+
+// ── Stats ─────────────────────────────────────────────────────────────────────
+function updateStats() {
+  const total   = GUESTS.length;
+  const inCount = Object.keys(checkedIn).length;
+  document.getElementById('stat-total').textContent   = total;
+  document.getElementById('stat-in').textContent      = inCount;
+  document.getElementById('stat-pending').textContent = total - inCount;
+  if (fbConnected) {
+    setConnStatus('green', `🔴 Live — ${inCount} of ${total} admitted`);
+  }
+}
+
+// ── QR Scanner ────────────────────────────────────────────────────────────────
 function startScanner() {
   scanner = new Html5Qrcode("reader");
   scanner.start(
@@ -259,7 +391,7 @@ function startScanner() {
     { fps: 10, qrbox: { width: 220, height: 220 } },
     onScanSuccess,
     () => {}
-  ).catch(err => {
+  ).catch(() => {
     document.getElementById('reader').innerHTML =
       `<div style="padding:20px;text-align:center;color:#e74c3c;">
         ⚠️ Camera access denied.<br><small>Please allow camera permissions and reload.</small>
@@ -272,28 +404,25 @@ function onScanSuccess(decodedText) {
   scanning = false;
   scanner.pause();
 
-  // Parse QR data: GUEST_ID:001|NAME:ESV Collins Alabi|PHONE:...
   const match = decodedText.match(/GUEST_ID:(\d+)\|NAME:(.+?)\|PHONE:(.*)/);
-  const resultBox = document.getElementById('result-box');
-  resultBox.style.display = 'block';
+  document.getElementById('result-box').style.display = 'block';
 
   if (match) {
-    const id = match[1].padStart(3, '0');
-    const name = match[2];
+    const id    = match[1].padStart(3, '0');
+    const name  = match[2];
     const guest = GUESTS.find(g => g.id === id);
 
     if (!guest) {
       showResult('unknown', '❓', name, `ID: #${id}`, 'Not on guest list');
     } else if (checkedIn[id]) {
-      const time = checkedIn[id];
-      showResult('already', '⚠️', name, `Already admitted at ${time}`, 'Duplicate Entry');
+      showResult('already', '⚠️', name, `Already admitted at ${checkedIn[id]}`, 'Duplicate Entry');
     } else {
       const now = new Date().toLocaleTimeString('en-NG', {hour:'2-digit', minute:'2-digit'});
       checkedIn[id] = now;
       updateStats();
       renderList();
-      showResult('admitted', '✅', name, `Guest #${id} • ${now}`, 'ACCESS GRANTED');
-      // Haptic feedback on mobile
+      writeCheckin(id, now);   // ← writes to Firebase → syncs all devices
+      showResult('admitted', '✅', name, `Guest #${id} · ${now}`, 'ACCESS GRANTED');
       if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
     }
   } else {
@@ -304,9 +433,9 @@ function onScanSuccess(decodedText) {
 function showResult(type, icon, name, sub, status) {
   const box = document.getElementById('result-box');
   box.className = `result-box ${type}`;
-  document.getElementById('result-icon').textContent = icon;
-  document.getElementById('result-name').textContent = name;
-  document.getElementById('result-sub').textContent = sub;
+  document.getElementById('result-icon').textContent   = icon;
+  document.getElementById('result-name').textContent   = name;
+  document.getElementById('result-sub').textContent    = sub;
   document.getElementById('result-status').textContent = status;
 }
 
@@ -316,7 +445,7 @@ function resumeScanner() {
   scanner.resume();
 }
 
-// ── Guest List ───────────────────────────────────────────────────────────────
+// ── Guest List ────────────────────────────────────────────────────────────────
 function setFilter(f, btn) {
   currentFilter = f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -325,14 +454,14 @@ function setFilter(f, btn) {
 }
 
 function renderList() {
-  const q = document.getElementById('search-input').value.toLowerCase();
+  const q    = document.getElementById('search-input').value.toLowerCase();
   const list = document.getElementById('guest-list');
   list.innerHTML = '';
 
   const filtered = GUESTS.filter(g => {
     const matchSearch = g.name.toLowerCase().includes(q);
     const isIn = !!checkedIn[g.id];
-    if (currentFilter === 'in') return matchSearch && isIn;
+    if (currentFilter === 'in')      return matchSearch && isIn;
     if (currentFilter === 'pending') return matchSearch && !isIn;
     return matchSearch;
   });
@@ -345,7 +474,7 @@ function renderList() {
   filtered.forEach(g => {
     const isIn = !!checkedIn[g.id];
     const time = checkedIn[g.id] || '';
-    const div = document.createElement('div');
+    const div  = document.createElement('div');
     div.className = `guest-item ${isIn ? 'checked' : 'pending'}`;
     div.innerHTML = `
       <div>
@@ -354,19 +483,21 @@ function renderList() {
       </div>
       <span class="badge ${isIn ? 'in' : 'pending'}">${isIn ? 'IN ✓' : 'Pending'}</span>
     `;
+    // Manual tap-to-admit from guest list
     div.onclick = () => {
       if (!isIn) {
         const now = new Date().toLocaleTimeString('en-NG', {hour:'2-digit', minute:'2-digit'});
         checkedIn[g.id] = now;
         updateStats();
         renderList();
+        writeCheckin(g.id, now);
       }
     };
     list.appendChild(div);
   });
 }
 
-function switchTab(tab) {
+function switchTab(tab, event) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById(tab).classList.add('active');
@@ -374,7 +505,7 @@ function switchTab(tab) {
   if (tab === 'guests') renderList();
 }
 
-// Init
+// ── Init ──────────────────────────────────────────────────────────────────────
 updateStats();
 startScanner();
 </script>

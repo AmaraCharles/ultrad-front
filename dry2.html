@@ -1,127 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="referrer" content="no-referrer">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Federal Public Assets Management — Federal Ministry of Housing & Urban Development</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
   :root {
-    --navy: #0d1f4e;
-    --navy-dark: #071030;
-    --navy-mid: #162960;
-    --navy-light: #1e3a8a;
-    --blue-accent: #2d5fc4;
-    --blue-light: #4a7fd4;
-    --gold: #c9a227;
-    --gold-light: #e8c45a;
-    --gold-pale: #f5e9c0;
+    --navy: #1a2e1f;
+    --navy-dark: #0d1a10;
+    --navy-mid: #243b2a;
+    --navy-light: #2f4d37;
+    --blue-accent: #3a6644;
+    --blue-light: #4d7d5a;
+    --gold: #b8b4ac;
+    --gold-light: #d4d0c8;
+    --gold-pale: #eceae6;
     --white: #ffffff;
-    --off-white: #f8f9fd;
-    --gray-50: #f1f4fb;
-    --gray-100: #e8ecf5;
-    --gray-200: #d1d8ea;
-    --gray-400: #8a95b0;
-    --gray-600: #4a5578;
-    --gray-800: #1e2a45;
-    --text: #0d1630;
+    --off-white: #f5f5f3;
+    --gray-50: #efefed;
+    --gray-100: #e0e0dc;
+    --gray-200: #c4c4be;
+    --gray-400: #8a8a82;
+    --gray-600: #5a5a54;
+    --gray-800: #2a2a26;
+    --text: #141410;
+    --platinum: #c8c4bc;
+    --platinum-light: #dedad4;
+    --platinum-pale: #f0eeea;
+    --sage: #4a7a56;
+    --sage-light: #6a9a76;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Outfit', sans-serif;
     background: var(--off-white);
     color: var(--text);
     overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    opacity: 0.4;
   }
 
   /* ─── NAV ─── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    background: rgba(7, 16, 48, 0.97);
-    backdrop-filter: blur(14px);
+    background: transparent;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2.5rem;
+    padding: 0 3rem;
     height: 70px;
-    border-bottom: 1px solid rgba(201, 162, 39, 0.35);
+    border-bottom: none;
+    transition: background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease;
+  }
+  nav.scrolled {
+    background: rgba(13, 26, 16, 0.94);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(200, 196, 188, 0.1);
   }
   .nav-brand { display: flex; align-items: center; gap: 14px; }
   .nav-coat {
-    width: 46px; height: 46px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), #8b6914);
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem; color: white;
-    border: 2px solid rgba(201, 162, 39, 0.6);
-    box-shadow: 0 0 0 3px rgba(201,162,39,0.15);
+    font-size: 1.05rem; color: white;
+    border: 1px solid rgba(255,255,255,0.15);
   }
-  .nav-title { color: var(--white); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.02em; line-height: 1.3; }
-  .nav-title span { display: block; color: var(--gold-light); font-size: 0.68rem; font-weight: 300; letter-spacing: 0.04em; }
-  .nav-links { display: flex; gap: 2rem; }
-  .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.82rem; font-weight: 400; letter-spacing: 0.03em; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--gold-light); }
+  .nav-title { color: var(--white); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em; line-height: 1.3; }
+  .nav-title span { display: block; color: rgba(255,255,255,0.42); font-size: 0.63rem; font-weight: 300; letter-spacing: 0.07em; }
+  .nav-links { display: flex; gap: 2.4rem; }
+  .nav-links a {
+    color: rgba(255,255,255,0.52); text-decoration: none;
+    font-size: 0.74rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.25s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--platinum-light);
+    transform: scaleX(0); transition: transform 0.25s ease;
+    transform-origin: left;
+  }
+  .nav-links a:hover { color: rgba(255,255,255,0.9); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-links a i { display: none; }
 
-  /* ─── HERO ─── */
+  /* ─── HERO CAROUSEL ─── */
   .hero {
     min-height: 100vh;
-    background: linear-gradient(155deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-mid) 100%);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 120px 5% 80px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
   }
-  .hero::before {
+
+  /* Slides */
+  .hero-slides { position: absolute; inset: 0; }
+  .hero-slide {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    z-index: 0;
+  }
+  .hero-slide.active { opacity: 1; z-index: 1; }
+  .hero-slide::after {
     content: '';
     position: absolute; inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=60&auto=format&fit=crop');
-    background-size: cover; background-position: center;
-    opacity: 0.05;
+    background: linear-gradient(
+      110deg,
+      rgba(5,14,8,0.92) 0%,
+      rgba(10,26,14,0.78) 38%,
+      rgba(13,32,18,0.52) 65%,
+      rgba(0,0,0,0.28) 100%
+    );
   }
-  /* gold wave decoration matching the card */
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; left: -5%;
-    width: 110%; height: 200px;
-    background: linear-gradient(90deg, rgba(201,162,39,0.18) 0%, rgba(45,95,196,0.25) 50%, rgba(201,162,39,0.1) 100%);
-    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-    transform: scaleX(1.1);
-    pointer-events: none;
+
+  /* Ticker bar at very top */
+  .hero-ticker {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1100;
+    background: rgba(13, 26, 16, 0.98);
+    border-bottom: 1px solid rgba(200, 196, 188, 0.15);
+    height: 30px;
+    display: flex; align-items: center; overflow: hidden;
+    font-size: 0.66rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.45);
   }
-  .hero-wave {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 80px; overflow: hidden;
+  .ticker-label {
+    background: var(--navy-mid);
+    color: var(--platinum-light);
+    font-weight: 600; padding: 0 16px;
+    height: 100%; display: flex; align-items: center;
+    flex-shrink: 0; white-space: nowrap;
+    font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+    border-right: 1px solid rgba(200,196,188,0.15);
   }
-  .hero-wave svg { width: 100%; height: 100%; }
+  .ticker-track { display: flex; animation: ticker 42s linear infinite; white-space: nowrap; }
+  .ticker-item { padding: 0 44px; opacity: 0.55; }
+  .ticker-item i { color: var(--platinum); margin-right: 6px; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* NAV offset for ticker */
+  nav { top: 30px; }
+
+  /* Carousel Content */
+  .hero-content {
+    position: relative; z-index: 2;
+    width: 100%; max-width: 1300px;
+    margin: 0 auto;
+    padding: 160px 5% 100px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+  }
 
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(201, 162, 39, 0.15);
-    border: 1px solid rgba(201, 162, 39, 0.4);
-    color: var(--gold-light);
-    padding: 6px 16px; border-radius: 100px;
-    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-    margin-bottom: 28px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.75);
+    padding: 5px 16px; border-radius: 100px;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 24px;
     animation: fadeUp 0.8s ease both;
   }
-  .hero-text { position: relative; z-index: 1; }
+  .hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sage-light); animation: pulse 2s ease infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+
+  .hero-text { position: relative; }
   .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-    font-weight: 900;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.6rem, 5vw, 4.4rem);
+    font-weight: 800;
     color: var(--white);
-    line-height: 1.12;
-    margin-bottom: 24px;
+    line-height: 1.08;
+    margin-bottom: 22px;
     animation: fadeUp 0.8s 0.1s ease both;
   }
-  .hero h1 em { color: var(--gold-light); font-style: normal; }
+  .hero h1 em { color: var(--platinum-light); font-style: normal; display: block; }
+  .hero-slide-caption {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--platinum-light); margin-bottom: 10px; opacity: 0.65;
+    animation: fadeUp 0.8s 0.05s ease both;
+  }
   .hero p {
-    color: rgba(255,255,255,0.72);
-    font-size: 1.05rem; font-weight: 300; line-height: 1.75;
+    color: rgba(255,255,255,0.78);
+    font-size: 1rem; font-weight: 300; line-height: 1.8;
     max-width: 520px;
     margin-bottom: 36px;
     animation: fadeUp 0.8s 0.2s ease both;
@@ -130,63 +201,145 @@
     display: flex; gap: 14px; flex-wrap: wrap;
     animation: fadeUp 0.8s 0.3s ease both;
   }
+
+  /* ── RIGHT PANEL: BlockToArt-style vertical scroll feed ── */
+  .hero-right {
+    position: relative; z-index: 2;
+    height: calc(100vh - 102px);
+    overflow: hidden;
+    animation: fadeLeft 0.9s 0.25s ease both;
+    /* top + bottom fade masks */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 88%, transparent 100%);
+  }
+
+  .hero-feed-track {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: feedScroll 40s linear infinite;
+    will-change: transform;
+  }
+  .hero-feed-track:hover { animation-play-state: paused; }
+
+  @keyframes feedScroll {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+
+  /* Individual asset card in feed */
+  .feed-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(200,196,188,0.15);
+    backdrop-filter: blur(14px);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+    flex-shrink: 0;
+  }
+  .feed-card:hover {
+    border-color: rgba(200,196,188,0.4);
+    background: rgba(255,255,255,0.09);
+  }
+  .feed-card-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--platinum-light);
+    background: rgba(200,196,188,0.1);
+    border: 1px solid rgba(200,196,188,0.2);
+    border-radius: 100px; padding: 3px 9px;
+    margin-bottom: 8px;
+  }
+  .feed-card-loc i { color: var(--platinum); font-size: 0.62rem; }
+  .feed-card-badge {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.07em;
+    color: var(--navy-dark);
+    background: var(--platinum-light);
+    border-radius: 5px; padding: 2px 8px;
+  }
+  .feed-card-img {
+    width: 100%; height: 160px;
+    object-fit: cover;
+    display: block;
+  }
+  .feed-card-body {
+    padding: 14px 16px;
+  }
+  .feed-card-name {
+    font-weight: 600; font-size: 0.82rem;
+    color: rgba(255,255,255,0.92); line-height: 1.35;
+    margin-bottom: 6px;
+  }
+  .feed-card-meta {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .feed-card-loc {
+    font-size: 0.7rem; color: rgba(255,255,255,0.42);
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* Live badge */
+  .hero-live {
+    position: absolute; bottom: 36px; left: 5%;
+    z-index: 3;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(200,196,188,0.25);
+    backdrop-filter: blur(8px);
+    border-radius: 100px; padding: 6px 16px;
+    font-size: 0.63rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.6);
+  }
+  .hero-live .live-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #2ecc71;
+    animation: livePulse 1.5s ease infinite;
+  }
+  @keyframes livePulse {
+    0% { box-shadow: 0 0 0 0 rgba(46,204,113,0.6); }
+    70% { box-shadow: 0 0 0 8px rgba(46,204,113,0); }
+    100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+  }
+
+  /* Progress bar */
+  .hero-progress {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: rgba(255,255,255,0.1); z-index: 3;
+  }
+  .hero-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sage), var(--sage-light));
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  .hero-wave { position: absolute; bottom: 0; left: 0; right: 0; height: 80px; overflow: hidden; z-index: 2; }
+  .hero-wave svg { width: 100%; height: 100%; }
   .btn-primary {
-    background: linear-gradient(135deg, var(--gold), #a07810);
+    background: linear-gradient(135deg, var(--sage), var(--navy-mid));
     color: var(--white);
-    padding: 14px 28px; border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem; font-weight: 600; letter-spacing: 0.02em;
+    padding: 14px 30px; border-radius: 6px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.84rem; font-weight: 600; letter-spacing: 0.06em;
     border: none; cursor: pointer; text-decoration: none;
     display: inline-flex; align-items: center; gap: 9px;
-    transition: all 0.25s; box-shadow: 0 4px 20px rgba(201,162,39,0.35);
+    transition: all 0.3s; box-shadow: 0 4px 24px rgba(74,122,86,0.35);
+    text-transform: uppercase;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,162,39,0.5); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(74,122,86,0.5); filter: brightness(1.08); }
   .btn-outline {
     background: transparent;
-    border: 1px solid rgba(255,255,255,0.3);
-    color: var(--white);
-    padding: 14px 28px; border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem; font-weight: 500; letter-spacing: 0.02em;
+    border: 1px solid rgba(255,255,255,0.22);
+    color: rgba(255,255,255,0.75);
+    padding: 14px 30px; border-radius: 6px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.84rem; font-weight: 500; letter-spacing: 0.06em;
     cursor: pointer; text-decoration: none;
     display: inline-flex; align-items: center; gap: 9px;
-    transition: all 0.25s;
+    transition: all 0.3s; text-transform: uppercase;
   }
-  .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
-
-  .hero-image-col {
-    display: flex; justify-content: flex-end; align-items: center;
-    position: relative; z-index: 1;
-    animation: fadeLeft 0.9s 0.2s ease both;
-  }
-  .hero-img-stack { position: relative; width: 420px; height: 500px; }
-  .hero-img-main {
-    position: absolute; top: 0; right: 0;
-    width: 360px; height: 420px;
-    border-radius: 16px;
-    object-fit: cover;
-    border: 3px solid rgba(201,162,39,0.4);
-    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
-  }
-  .hero-img-sec {
-    position: absolute; bottom: 0; left: 0;
-    width: 220px; height: 180px;
-    border-radius: 12px;
-    object-fit: cover;
-    border: 3px solid rgba(255,255,255,0.15);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
-  }
-  .hero-stat-badge {
-    position: absolute; top: 50px; left: 0;
-    background: rgba(255,255,255,0.07);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(201,162,39,0.3);
-    border-radius: 12px;
-    padding: 16px 20px;
-    color: white;
-  }
-  .hero-stat-badge .num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold-light); }
-  .hero-stat-badge .label { font-size: 0.72rem; font-weight: 300; color: rgba(255,255,255,0.65); letter-spacing: 0.05em; }
+  .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); color: white; }
 
   /* ─── STATS STRIP ─── */
   .stats-strip {
@@ -213,26 +366,26 @@
   }
   .stat-item:hover::before { transform: scaleX(1); }
   .stat-num {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 2.8rem; font-weight: 900;
     color: var(--navy);
     line-height: 1;
     margin-bottom: 6px;
   }
-  .stat-num span { color: var(--gold); }
-  .stat-icon { font-size: 1.1rem; color: var(--blue-accent); margin-bottom: 8px; }
+  .stat-num span { color: var(--sage); }
+  .stat-icon { font-size: 1.1rem; color: var(--sage); margin-bottom: 8px; }
   .stat-label { font-size: 0.82rem; color: var(--gray-600); font-weight: 400; letter-spacing: 0.02em; }
 
   /* ─── SECTION SHARED ─── */
   section { padding: 90px 5%; }
   .section-tag {
     display: inline-flex; align-items: center; gap: 8px;
-    color: var(--navy); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray-600); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
     margin-bottom: 14px;
   }
-  .section-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .section-tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--platinum); }
   .section-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: clamp(1.8rem, 3.5vw, 2.8rem);
     font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 18px;
   }
@@ -249,16 +402,16 @@
   .about-quote {
     position: absolute;
     bottom: -28px; right: -28px;
-    background: var(--navy);
+    background: var(--navy-dark);
     color: white;
     padding: 28px 32px;
-    border-radius: 12px;
+    border-radius: 10px;
     max-width: 280px;
-    border-top: 3px solid var(--gold);
-    box-shadow: 0 12px 40px rgba(13,31,78,0.45);
+    border-top: 2px solid var(--platinum);
+    box-shadow: 0 16px 48px rgba(13,26,16,0.55);
   }
-  .about-quote p { font-size: 0.9rem; line-height: 1.6; font-weight: 300; margin-bottom: 12px; }
-  .about-quote strong { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold-light); display: block; }
+  .about-quote p { font-size: 0.88rem; line-height: 1.65; font-weight: 300; margin-bottom: 12px; }
+  .about-quote strong { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--platinum-light); display: block; }
   .about-features { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .feature-card {
     background: var(--white); border: 1px solid var(--gray-200);
@@ -273,31 +426,30 @@
   /* ─── MANDATE CARDS ─── */
   .mandate-section { background: var(--navy-dark); }
   .mandate-section .section-title { color: var(--white); }
-  .mandate-section .section-tag { color: var(--gold-light); }
-  .mandate-section .section-tag::before { background: var(--gold-light); }
-  .mandate-section .section-lead { color: rgba(255,255,255,0.65); }
+  .mandate-section .section-tag { color: var(--platinum-light); }
+  .mandate-section .section-tag::before { background: var(--platinum); }
+  .mandate-section .section-lead { color: rgba(255,255,255,0.58); }
   .mandates-grid {
     margin-top: 50px;
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
   }
   .mandate-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-left: 3px solid rgba(201,162,39,0.4);
-    border-radius: 14px; padding: 32px 28px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 2px solid rgba(200,196,188,0.25);
+    border-radius: 12px; padding: 32px 28px;
     transition: all 0.3s;
     cursor: default;
   }
   .mandate-card:hover {
-    background: rgba(255,255,255,0.09);
-    border-color: rgba(201,162,39,0.5);
-    border-left-color: var(--gold);
+    background: rgba(255,255,255,0.07);
+    border-left-color: var(--platinum-light);
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.28);
   }
   .mandate-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem; font-weight: 900; color: rgba(201,162,39,0.2);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 900; color: rgba(200,196,188,0.12);
     line-height: 1; margin-bottom: 16px;
   }
   .mandate-title { font-weight: 600; font-size: 0.95rem; color: white; margin-bottom: 12px; }
@@ -313,7 +465,7 @@
   .search-wrap input {
     background: var(--white); border: 1px solid var(--gray-200);
     border-radius: 10px; padding: 12px 20px 12px 46px;
-    font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--text);
+    font-family: 'Outfit', sans-serif; font-size: 0.88rem; color: var(--text);
     width: 340px; outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
@@ -323,14 +475,14 @@
   .filter-btn {
     background: var(--white); border: 1px solid var(--gray-200);
     border-radius: 8px; padding: 10px 16px;
-    font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; color: var(--gray-600);
+    font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 500; color: var(--gray-600);
     cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
   }
   .filter-btn:hover, .filter-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
   select.filter-select {
     background: var(--white); border: 1px solid var(--gray-200);
     border-radius: 8px; padding: 10px 36px 10px 16px;
-    font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--gray-600);
+    font-family: 'Outfit', sans-serif; font-size: 0.8rem; color: var(--gray-600);
     cursor: pointer; outline: none; appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a95b0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat; background-position: right 12px center;
@@ -362,7 +514,7 @@
     font-size: 0.72rem; font-weight: 500;
   }
   .td-purpose.office { background: rgba(13,31,78,0.08); color: var(--navy-mid); }
-  .td-purpose.academic { background: rgba(201,162,39,0.12); color: #8b6914; }
+  .td-purpose.academic { background: rgba(74,122,86,0.12); color: #2d5e38; }
   .td-purpose.residential { background: rgba(45,95,196,0.1); color: #1e3a8a; }
   .td-purpose.workshop { background: rgba(168,85,247,0.1); color: #7c3aed; }
   .td-purpose.mixed { background: rgba(239,68,68,0.1); color: #dc2626; }
@@ -378,7 +530,7 @@
     color: white; border: none; border-radius: 6px;
     padding: 7px 14px; font-size: 0.75rem; font-weight: 600;
     cursor: pointer; transition: all 0.2s; letter-spacing: 0.02em;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Outfit', sans-serif;
     box-shadow: 0 2px 8px rgba(13,31,78,0.25);
   }
   .btn-view:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(13,31,78,0.35); filter: brightness(1.1); }
@@ -393,7 +545,7 @@
   .pg-btn {
     width: 34px; height: 34px; border-radius: 8px;
     border: 1px solid var(--gray-200); background: var(--white);
-    cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--gray-600);
+    cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.82rem; color: var(--gray-600);
     display: flex; align-items: center; justify-content: center;
     transition: all 0.2s;
   }
@@ -413,12 +565,12 @@
 
   .modal {
     background: var(--white);
-    border-radius: 18px;
+    border-radius: 16px;
     width: 100%; max-width: 840px;
     max-height: 90vh; overflow-y: auto;
-    box-shadow: 0 32px 100px rgba(7,16,48,0.5);
+    box-shadow: 0 40px 100px rgba(13,26,16,0.45);
     animation: slideUp 0.3s ease;
-    border-top: 4px solid var(--gold);
+    border-top: 2px solid var(--platinum);
   }
   @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
@@ -431,12 +583,12 @@
   .modal-header-left { flex: 1; }
   .modal-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(201,162,39,0.2); border: 1px solid rgba(201,162,39,0.4);
-    color: var(--gold-light); border-radius: 100px;
-    padding: 4px 12px; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    background: rgba(200,196,188,0.12); border: 1px solid rgba(200,196,188,0.25);
+    color: var(--platinum-light); border-radius: 100px;
+    padding: 4px 12px; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
     margin-bottom: 10px;
   }
-  .modal-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: white; line-height: 1.3; margin-bottom: 6px; }
+  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 700; color: white; line-height: 1.3; margin-bottom: 6px; }
   .modal-subtitle { font-size: 0.82rem; color: rgba(255,255,255,0.55); }
   .modal-close {
     width: 36px; height: 36px; border-radius: 50%;
@@ -486,14 +638,14 @@
   .info-block-value { font-size: 0.88rem; font-weight: 500; color: var(--text); line-height: 1.4; }
 
   .modal-meta {
-    background: linear-gradient(135deg, rgba(13,31,78,0.04), rgba(45,95,196,0.04));
+    background: var(--gray-50);
     border: 1px solid var(--gray-200);
-    border-left: 3px solid var(--gold);
+    border-left: 2px solid var(--platinum);
     border-radius: 10px;
     padding: 18px 22px;
     display: flex; align-items: center; gap: 16px;
   }
-  .modal-meta-icon { font-size: 1.4rem; color: var(--gold); flex-shrink: 0; }
+  .modal-meta-icon { font-size: 1.4rem; color: var(--sage); flex-shrink: 0; }
   .modal-meta-text { font-size: 0.83rem; color: var(--gray-600); line-height: 1.6; }
   .modal-meta-text strong { color: var(--navy); font-weight: 600; }
 
@@ -509,7 +661,7 @@
     display: inline-flex; align-items: center; gap: 7px;
     background: var(--navy); color: white;
     border: none; border-radius: 8px; padding: 10px 20px;
-    font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600;
+    font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 600;
     cursor: pointer; transition: all 0.2s;
   }
   .modal-footer-btn:hover { background: var(--navy-mid); }
@@ -582,31 +734,32 @@
   footer {
     background: var(--navy-dark);
     padding: 70px 5% 40px;
-    color: rgba(255,255,255,0.65);
-    border-top: 3px solid var(--gold);
+    color: rgba(255,255,255,0.55);
+    border-top: 1px solid rgba(200,196,188,0.12);
   }
   .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
   .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
   .footer-logo-icon {
-    width: 48px; height: 48px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), #8b6914);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(200,196,188,0.18);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem; color: white;
+    font-size: 1.1rem; color: white;
   }
-  .footer-logo-text { color: white; font-weight: 600; font-size: 0.9rem; line-height: 1.3; }
-  .footer-logo-text span { display: block; color: var(--gold-light); font-size: 0.72rem; font-weight: 300; }
-  .footer-desc { font-size: 0.85rem; line-height: 1.7; color: rgba(255,255,255,0.45); max-width: 320px; }
-  .footer-col h4 { color: var(--gold-light); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; }
+  .footer-logo-text { color: white; font-weight: 600; font-size: 0.88rem; line-height: 1.3; }
+  .footer-logo-text span { display: block; color: rgba(255,255,255,0.38); font-size: 0.68rem; font-weight: 300; }
+  .footer-desc { font-size: 0.83rem; line-height: 1.75; color: rgba(255,255,255,0.38); max-width: 320px; }
+  .footer-col h4 { color: var(--platinum-light); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px; }
   .footer-col ul { list-style: none; }
   .footer-col ul li { margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-  .footer-col ul li a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-  .footer-col ul li a:hover { color: var(--gold-light); }
-  .footer-col ul li i { color: var(--gold); font-size: 0.75rem; width: 14px; }
+  .footer-col ul li a { color: rgba(255,255,255,0.42); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: rgba(255,255,255,0.85); }
+  .footer-col ul li i { color: var(--platinum); font-size: 0.7rem; width: 14px; }
   .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid rgba(255,255,255,0.07);
     padding-top: 28px;
     display: flex; justify-content: space-between; align-items: center;
-    font-size: 0.78rem; color: rgba(255,255,255,0.3);
+    font-size: 0.75rem; color: rgba(255,255,255,0.25);
   }
 
   /* ─── ANIMATIONS ─── */
@@ -617,8 +770,8 @@
 
   /* ─── MOBILE ─── */
   @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; padding-top: 100px; }
-    .hero-image-col { display: none; }
+    .hero-content { grid-template-columns: 1fr; padding-top: 130px; }
+    .hero-right { display: none; }
     .stats-strip { grid-template-columns: 1fr 1fr; }
     .about-grid { grid-template-columns: 1fr; }
     .mandates-grid { grid-template-columns: 1fr; }
@@ -631,6 +784,8 @@
     .modal-img-thumbs { flex-direction: row; }
     .modal-info-grid { grid-template-columns: 1fr; }
     .modal-body { padding: 20px; }
+    .hero-controls { bottom: 20px; }
+    .hero-live, .hero-counter { display: none; }
   }
 </style>
 </head>
@@ -696,10 +851,29 @@
   </div>
 </div>
 
+<!-- TICKER -->
+<div class="hero-ticker">
+  <div class="ticker-label"><i class="fa-solid fa-satellite-dish"></i> &nbsp;FPAM LIVE</div>
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item"><i class="fa-solid fa-building-columns"></i> 2,764+ Federal Assets Catalogued Nationwide</span>
+    <span class="ticker-item"><i class="fa-solid fa-map-pin"></i> Coverage: All 36 States + FCT Abuja</span>
+    <span class="ticker-item"><i class="fa-solid fa-sitemap"></i> 31 Federal Ministries &amp; Agencies — Fully Inventoried</span>
+    <span class="ticker-item"><i class="fa-solid fa-star"></i> Federal Republic of Nigeria — FMHUD Asset Management Division</span>
+    <span class="ticker-item"><i class="fa-solid fa-shield-halved"></i> Ensuring Accountability, Transparency &amp; Stewardship of Public Property</span>
+    <span class="ticker-item"><i class="fa-solid fa-trophy"></i> FRSC: 229 Facilities — Largest MDA Portfolio in the Register</span>
+    <span class="ticker-item"><i class="fa-solid fa-building-columns"></i> 2,764+ Federal Assets Catalogued Nationwide</span>
+    <span class="ticker-item"><i class="fa-solid fa-map-pin"></i> Coverage: All 36 States + FCT Abuja</span>
+    <span class="ticker-item"><i class="fa-solid fa-sitemap"></i> 31 Federal Ministries &amp; Agencies — Fully Inventoried</span>
+    <span class="ticker-item"><i class="fa-solid fa-star"></i> Federal Republic of Nigeria — FMHUD Asset Management Division</span>
+    <span class="ticker-item"><i class="fa-solid fa-shield-halved"></i> Ensuring Accountability, Transparency &amp; Stewardship of Public Property</span>
+    <span class="ticker-item"><i class="fa-solid fa-trophy"></i> FRSC: 229 Facilities — Largest MDA Portfolio in the Register</span>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav>
   <div class="nav-brand">
-    <div class="nav-coat"><i class="fa-solid fa-eagle" style="font-size:1.1rem"></i><i class="fa-solid fa-dove" style="display:none"></i>🦅</div>
+    <div class="nav-coat">🦅</div>
     <div class="nav-title">
       Federal Public Assets Management
       <span>Federal Ministry of Housing &amp; Urban Development</span>
@@ -715,27 +889,43 @@
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- HERO CAROUSEL -->
 <section class="hero">
-  <div class="hero-text">
-    <div class="hero-badge"><i class="fa-solid fa-star"></i> Federal Republic of Nigeria</div>
-    <h1>Safeguarding Nigeria's<br><em>Federal Public Assets</em></h1>
-    <p>The Department of Federal Public Assets Management is responsible for overseeing, maintaining, and protecting all federal government buildings and facilities across Nigeria's 36 states and the FCT.</p>
-    <div class="hero-actions">
-      <a href="#inventory" class="btn-primary"><i class="fa-solid fa-table-list"></i> View Asset Inventory</a>
-      <a href="#about" class="btn-outline"><i class="fa-solid fa-arrow-right"></i> Learn More</a>
-    </div>
+  <!-- Background Slides -->
+  <div class="hero-slides">
+    <div class="hero-slide active" style="background-image:url('./cbn-main.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('./national-assembly-1.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('./cbn-hq.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('./national-assembly-2.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('./ncc-hq.jpg')"></div>
   </div>
-  <div class="hero-image-col">
-    <div class="hero-img-stack">
-      <img class="hero-img-main" src="https://images.unsplash.com/photo-1555636222-cae831e670b3?w=800&q=80&auto=format&fit=crop" alt="Federal Government Building">
-      <img class="hero-img-sec" src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=500&q=80&auto=format&fit=crop" alt="Government Architecture">
-      <div class="hero-stat-badge">
-        <div class="num">2,764+</div>
-        <div class="label">Assets Inventoried</div>
+
+  <!-- Live badge -->
+  <div class="hero-live"><div class="live-dot"></div> Live Registry — 2,764+ Assets</div>
+
+  <!-- Progress bar -->
+  <div class="hero-progress"><div class="hero-progress-bar" id="heroProgressBar"></div></div>
+
+  <!-- Main content -->
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-slide-caption" id="heroCaption">Federal Infrastructure · Abuja, FCT</div>
+      <div class="hero-badge"><div class="dot"></div> Federal Republic of Nigeria</div>
+      <h1>Safeguarding Nigeria's<br><em>Federal Public Assets</em></h1>
+      <p>The Department of Federal Public Assets Management is responsible for overseeing, maintaining, and protecting all federal government buildings and facilities across Nigeria's 36 states and the FCT — a living record of national infrastructure.</p>
+      <div class="hero-actions">
+        <a href="#inventory" class="btn-primary"><i class="fa-solid fa-table-list"></i> View Asset Inventory</a>
+        <a href="#about" class="btn-outline"><i class="fa-solid fa-arrow-right"></i> Learn More</a>
+      </div>
+    </div>
+
+    <div class="hero-right" id="heroFeed">
+      <div class="hero-feed-track" id="feedTrack">
+        <!-- JS will populate and duplicate these cards -->
       </div>
     </div>
   </div>
+
   <div class="hero-wave">
     <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--off-white)" opacity="0.15"/>
@@ -771,7 +961,7 @@
 <section id="about">
   <div class="about-grid">
     <div class="about-image-wrap reveal">
-      <img class="about-img" src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&auto=format&fit=crop" alt="Nigerian Government Building">
+      <img class="about-img" src="./cbn.jfif" alt="Central Bank of Nigeria Headquarters, Abuja">
       <div class="about-quote">
         <p>Ensuring every federal asset is functional, safe, and accessible for Nigerians.</p>
         <strong>Our Mission</strong>
@@ -817,32 +1007,32 @@
   <div class="mandates-grid">
     <div class="mandate-card reveal">
       <div class="mandate-num">01</div>
-      <div class="mandate-title"><i class="fa-solid fa-building" style="color:var(--gold);margin-right:8px"></i>Management of Federal Buildings</div>
+      <div class="mandate-title"><i class="fa-solid fa-building" style="color:var(--platinum-light);margin-right:8px"></i>Management of Federal Buildings</div>
       <div class="mandate-body">Responsible for the administration and management of all federal government buildings, offices, secretariats, and other public facilities across Nigeria.</div>
     </div>
     <div class="mandate-card reveal">
       <div class="mandate-num">02</div>
-      <div class="mandate-title"><i class="fa-solid fa-screwdriver-wrench" style="color:var(--gold);margin-right:8px"></i>Maintenance &amp; Repairs Oversight</div>
+      <div class="mandate-title"><i class="fa-solid fa-screwdriver-wrench" style="color:var(--platinum-light);margin-right:8px"></i>Maintenance &amp; Repairs Oversight</div>
       <div class="mandate-body">Coordinates and oversees the maintenance, repair, cleaning, and facility services for all properties under federal government jurisdiction.</div>
     </div>
     <div class="mandate-card reveal">
       <div class="mandate-num">03</div>
-      <div class="mandate-title"><i class="fa-solid fa-database" style="color:var(--gold);margin-right:8px"></i>National Asset Database</div>
+      <div class="mandate-title"><i class="fa-solid fa-database" style="color:var(--platinum-light);margin-right:8px"></i>National Asset Database</div>
       <div class="mandate-body">Maintains a real-time, comprehensive inventory of all public assets nationwide — covering location, purpose, valuation, and condition assessment.</div>
     </div>
     <div class="mandate-card reveal">
       <div class="mandate-num">04</div>
-      <div class="mandate-title"><i class="fa-solid fa-ruler-combined" style="color:var(--gold);margin-right:8px"></i>Standards Development</div>
+      <div class="mandate-title"><i class="fa-solid fa-ruler-combined" style="color:var(--platinum-light);margin-right:8px"></i>Standards Development</div>
       <div class="mandate-body">Creates, updates, and enforces maintenance standards, efficiency benchmarks, and best practices for asset upkeep and facility management.</div>
     </div>
     <div class="mandate-card reveal">
       <div class="mandate-num">05</div>
-      <div class="mandate-title"><i class="fa-solid fa-user-check" style="color:var(--gold);margin-right:8px"></i>Third-Party Supervision</div>
+      <div class="mandate-title"><i class="fa-solid fa-user-check" style="color:var(--platinum-light);margin-right:8px"></i>Third-Party Supervision</div>
       <div class="mandate-body">Supervises outsourced facility management companies and service providers to ensure contractual obligations and quality standards are met.</div>
     </div>
     <div class="mandate-card reveal">
       <div class="mandate-num">06</div>
-      <div class="mandate-title"><i class="fa-solid fa-shield-halved" style="color:var(--gold);margin-right:8px"></i>Safety &amp; Accessibility</div>
+      <div class="mandate-title"><i class="fa-solid fa-shield-halved" style="color:var(--platinum-light);margin-right:8px"></i>Safety &amp; Accessibility</div>
       <div class="mandate-body">Ensures all federal buildings are structurally safe, operationally functional, and accessible to civil servants and members of the public.</div>
     </div>
   </div>
@@ -919,28 +1109,28 @@
   <div class="reveal">
     <div class="section-tag">Visual Reference</div>
     <h2 class="section-title">Federal Facilities Across Nigeria</h2>
-    <p class="section-lead">Placeholder imagery representing the types of federal government buildings inventoried by this department.</p>
+    <p class="section-lead">Actual photographs of federal government buildings and parastatals under FPAM inventory — Central Bank of Nigeria, National Assembly Complex, and NCC Headquarters, Abuja.</p>
   </div>
   <div class="gallery-grid reveal">
     <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&auto=format&fit=crop" alt="Government Office">
-      <div class="gallery-overlay"><span><i class="fa-solid fa-building"></i> Federal Secretariat Complex</span></div>
+      <img src="./cbn-main.jpg" alt="Central Bank of Nigeria Headquarters, Abuja">
+      <div class="gallery-overlay"><span><i class="fa-solid fa-landmark"></i> Central Bank of Nigeria — Abuja HQ</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80&auto=format&fit=crop" alt="Court Building">
-      <div class="gallery-overlay"><span><i class="fa-solid fa-scale-balanced"></i> Federal High Court Facility</span></div>
+      <img src="./national-assembly-1.jpg" alt="National Assembly Building, Abuja">
+      <div class="gallery-overlay"><span><i class="fa-solid fa-building-columns"></i> National Assembly Complex, Abuja</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80&auto=format&fit=crop" alt="Education">
-      <div class="gallery-overlay"><span><i class="fa-solid fa-graduation-cap"></i> Federal College Campus</span></div>
+      <img src="./ncc-hq.jpg" alt="NCC Headquarters, Maitama Abuja">
+      <div class="gallery-overlay"><span><i class="fa-solid fa-satellite-dish"></i> NCC Headquarters, Maitama</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=600&q=80&auto=format&fit=crop" alt="Healthcare">
-      <div class="gallery-overlay"><span><i class="fa-solid fa-hospital"></i> Post Health Services</span></div>
+      <img src="./national-assembly-2.jpg" alt="National Assembly Complex, Abuja">
+      <div class="gallery-overlay"><span><i class="fa-solid fa-building-columns"></i> National Assembly — Senate Wing</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=600&q=80&auto=format&fit=crop" alt="Highway">
-      <div class="gallery-overlay"><span><i class="fa-solid fa-road"></i> Federal Roads &amp; Transport Office</span></div>
+      <img src="./cbn-cbd.jpg" alt="Central Bank of Nigeria Building, CBD Abuja">
+      <div class="gallery-overlay"><span><i class="fa-solid fa-coins"></i> CBN — Central Business District, Abuja</span></div>
     </div>
   </div>
 </section>
@@ -992,29 +1182,88 @@
 </footer>
 
 <script>
+// ─── NAV: Scroll-triggered transparency ───
+const navEl = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) navEl.classList.add('scrolled');
+  else navEl.classList.remove('scrolled');
+}, { passive: true });
+
+// ─── HERO: Background slow-rotate ───
+const bgSlides = document.querySelectorAll('.hero-slide');
+const slideLabels = [
+  "Central Bank of Nigeria HQ · CBD, Abuja",
+  "National Assembly Complex · Three Arms Zone, Abuja",
+  "CBN Headquarters · Abubakar Tafawa Balewa Way",
+  "National Assembly Building · Three Arms Zone, Abuja",
+  "NCC Headquarters · Aguiyi Ironsi Street, Maitama"
+];
+let bgIdx = 0;
+setInterval(() => {
+  bgSlides[bgIdx].classList.remove('active');
+  bgIdx = (bgIdx + 1) % bgSlides.length;
+  bgSlides[bgIdx].classList.add('active');
+  const cap = document.getElementById('heroCaption');
+  if (cap) cap.textContent = slideLabels[bgIdx];
+}, 5000);
+
+// ─── HERO FEED: Vertical auto-scroll card column (BlockToArt style) ───
+const feedCards = [
+  { img: "./cbn-main.jpg", name: "Central Bank of Nigeria HQ", loc: "CBD, Abuja FCT", tag: "Finance", badge: "Active" },
+  { img: "./national-assembly-1.jpg", name: "National Assembly Complex", loc: "Three Arms Zone, Abuja", tag: "Legislature", badge: "Operational" },
+  { img: "./ncc-hq.jpg", name: "NCC Headquarters", loc: "Aguiyi Ironsi St, Maitama", tag: "Communications", badge: "Active" },
+  { img: "./national-assembly-1.jpg", name: "National Assembly Building", loc: "Three Arms Zone, Abuja", tag: "Legislature", badge: "Operational" },
+  { img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Central_Bank_of_Nigeria.jpg/600px-Central_Bank_of_Nigeria.jpg", name: "CBN — Abubakar Balewa Way", loc: "CBD, Abuja FCT", tag: "Finance", badge: "Active" },
+  { img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/National_Assembly_of_Nigeria.jpg/600px-National_Assembly_of_Nigeria.jpg", name: "National Assembly of Nigeria", loc: "Three Arms Zone, Abuja", tag: "Legislature", badge: "Operational" },
+  { img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/CenBank.jpg/600px-CenBank.jpg", name: "CBN HQ — Full View", loc: "CBD, Abuja FCT", tag: "Finance", badge: "Active" },
+  { img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/National_Assembly_Building_with_Mace,_Abuja,_Nigeria.jpg/600px-National_Assembly_Building_with_Mace,_Abuja,_Nigeria.jpg", name: "National Assembly with Mace", loc: "Three Arms Zone, Abuja", tag: "Legislature", badge: "Operational" },
+  { img: "./ncc-hq.jpg", name: "NCC Building, Maitama", loc: "Aguiyi Ironsi St, Maitama", tag: "Telecom", badge: "Operational" },
+  { img: "./cbn-main.jpg", name: "CBN — National Heritage Building", loc: "CBD, Abuja FCT", tag: "Finance", badge: "Active" },
+];
+
+function buildFeed() {
+  const track = document.getElementById('feedTrack');
+  const all = [...feedCards, ...feedCards]; // duplicate for seamless loop
+  track.innerHTML = all.map(c => `
+    <div class="feed-card">
+      <img class="feed-card-img" src="${c.img}" alt="${c.name}" loading="lazy">
+      <div class="feed-card-body">
+        <div class="feed-card-tag"><i class="fa-solid fa-circle" style="font-size:0.4rem"></i> ${c.tag}</div>
+        <div class="feed-card-name">${c.name}</div>
+        <div class="feed-card-meta">
+          <div class="feed-card-loc"><i class="fa-solid fa-location-dot"></i> ${c.loc}</div>
+          <div class="feed-card-badge">${c.badge}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+buildFeed();
+</script>
+<script>
 // ─── ASSET IMAGE POOLS by purpose ───
 const assetImages = {
   office: [
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1555636222-cae831e670b3?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=800&q=80&auto=format&fit=crop",
+    "./cbn-main.jpg",
+    "./national-assembly-1.jpg",
+    "./cbn.jpg",
+    "./national-assembly-2.jpg",
+    "./ncc-hq.jpg",
+    "./cbn-cbd.jpg",
   ],
   academic: [
-    "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80&auto=format&fit=crop",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/National_Assembly_of_Nigeria.jpg/600px-National_Assembly_of_Nigeria.jpg",
+    "./ncc-hq.jpg",
+    "./cbn-main.jpg",
   ],
   park: [
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80&auto=format&fit=crop",
+    "./national-assembly-1.jpg",
+    "./national-assembly-2.jpg",
+    "./cbn-cbd.jpg",
   ],
   residential: [
-    "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80&auto=format&fit=crop",
+    "./cbn.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/National_Assembly_of_Nigeria.jpg/600px-National_Assembly_of_Nigeria.jpg",
   ],
 };
 
