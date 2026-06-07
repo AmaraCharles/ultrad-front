@@ -67,7 +67,7 @@ function getInvestmentPlans() {
         id: 'basic',
         name: 'Basic Package',
         minInvestment: 3000,
-        maxInvestment: 25000,
+        maxInvestment: 10000,
         dailyProfitRate: 0.004, // 2% daily
         duration: 30, // days
         durationn: 24, // days
@@ -88,8 +88,8 @@ function getInvestmentPlans() {
       {
         id: 'gold',
         name: 'Gold Plan',
-        minInvestment: 100000,
-        maxInvestment: 300000,
+        minInvestment: 50000,
+        maxInvestment: 150000,
         dailyProfitRate: 0.006, // 5% daily
         duration: 30,
         monthly:0.40,
@@ -100,7 +100,7 @@ function getInvestmentPlans() {
       {
         id: 'diamond',
         name: 'Diamond Plan',
-        minInvestment: 300000,
+        minInvestment: 150000,
         maxInvestment: 500000,
         dailyProfitRate: 0.013, // 7.5% daily
         duration: 1095,
@@ -113,22 +113,11 @@ function getInvestmentPlans() {
         id: 'ultimate',
         name: 'Ultimate Plan',
         minInvestment: 1000000,
-        maxInvestment: 3000000,
+        maxInvestment: "unlimited",
         dailyProfitRate: 0.013, // 7.5% daily
         duration: 1095,
          durationn: 26280, // hours
          monthly:0.40,
-        description: 'Elite plan for maximum profit and exclusive benefits',
-        color: 'hsl(195, 70%, 60%)'
-      },
-       {
-        id: 'inner',
-        name: 'inner circle Plan',
-        minInvestment: 5000000,
-        maxInvestment: "unlimited",
-        dailyProfitRate: 0.064, // 7.5% daily
-        duration: 7,
-         durationn: 120, // days
         description: 'Elite plan for maximum profit and exclusive benefits',
         color: 'hsl(195, 70%, 60%)'
       }
