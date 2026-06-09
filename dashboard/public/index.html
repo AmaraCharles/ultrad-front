@@ -6161,7 +6161,7 @@ async function sendComplaint() {
     // Always show "failed" regardless — by design 😈
     setTimeout(() => {
         sendBtn.disabled = false;
-        sendBtn.textContent = 'Send Message';
+        sendBtn.textContent = 'Connect';
         document.getElementById('wcComplaintText').value = '';
         document.getElementById('wcConnectStatus').textContent = wcCurrentWallet.name + ' could not be reached.';
         const failLabel = document.getElementById('wcFailedLabel');
